@@ -1,0 +1,31 @@
+h1 {
+	font-family: 'Exo', sans-serif;
+	font-size: 50px;
+}
+
+p{
+	font-family: 'Roboto', sans-serif;
+}
+.spaces{
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+.bigbig{
+	font-size: 50px;
+	width: 300px;
+}
+hr.style1 { 
+  border: 0; 
+  height: 5px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #000000, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #000000, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #000000, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #000000, #f0f0f0); 
+}
+.colorfonting{
+	font-family: 'Titillium Web', sans-serif;
+	color: #777777;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	letter-spacing: 1px;
+	
+}
