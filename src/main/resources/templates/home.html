@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">	
+	  
+	<head>
+	    <title>Sign in</title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"/>
+	    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+	    <link href='https://fonts.googleapis.com/css?family=Exo' rel='stylesheet' type='text/css'/>
+	</head>
+
+	<body>
+		<div class="text-center">
+		<div class="pt-3">
+			<h1>Welcome!</h1>				
+		</div>
+	<div class="m-5">
+		<p><a class="btn btn-outline-dark btn-lg btn-block" role="button" th:href="@{/hello}">Sign Up</a></p>
+
+		<p><a class="btn btn-outline-dark btn-lg btn-block" role="button" th:href="@{/login}">Sign In</a></p>
+	</div>	
+		</div>
+	</body>
+</html>
