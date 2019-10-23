@@ -7,7 +7,6 @@ import com.openclassrooms.project5.domain.MedicalRecord;
 import java.util.List;
 
 @Repository
-public interface MedicalRecordRepository extends JpaRepository<MedicalRecord,Long> {
+public class MedicalRecordRepository {
 
-     List<MedicalRecord> findAllByOrderByIdDesc();
 }

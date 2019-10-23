@@ -7,7 +7,6 @@ import com.openclassrooms.project5.domain.Firestation;
 import java.util.List;
 
 @Repository
-public interface FirestationRepository extends JpaRepository<Firestation,Long> {
+public class FirestationRepository {
 
-     List<Firestation> findAllByOrderByIdDesc();
 }

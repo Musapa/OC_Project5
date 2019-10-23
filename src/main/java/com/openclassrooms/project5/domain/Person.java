@@ -7,7 +7,7 @@ public class Person {
 
 	private String firstName;
 	private String lastName;
-	private String adress;
+	private String address;
 	private String city;
 	private int zip;
 	private int phone;
@@ -32,12 +32,12 @@ public class Person {
 	}
 
 	@JsonWrapper
-	public void setAdress(@JsonProperty("adress") String adress) {
-		this.adress = adress;
+	public void setaddress(@JsonProperty("address") String address) {
+		this.address = address;
 	}
 
-	public String getAdress() {
-		return this.adress;
+	public String getaddress() {
+		return this.address;
 	}
 
 	@JsonWrapper

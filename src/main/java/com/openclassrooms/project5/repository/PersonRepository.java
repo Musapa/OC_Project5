@@ -7,7 +7,6 @@ import com.openclassrooms.project5.domain.Person;
 import java.util.List;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person,Long> {
+public class PersonRepository {
 
-     List<Person> findAllByOrderByIdDesc();
 }
