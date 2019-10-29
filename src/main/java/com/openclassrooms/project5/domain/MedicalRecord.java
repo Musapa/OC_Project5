@@ -1,19 +1,17 @@
 package com.openclassrooms.project5.domain;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import com.jsoniter.annotation.JsonProperty;
-import com.jsoniter.annotation.JsonWrapper;
 
 public class MedicalRecord {
-	
+
 	private String firstName;
 	private String lastName;
-	private LocalDate birthdate;
-	private String medications;
-	private String allergies;
+	private String birthdate;
+	private List<String> medications;
+	private List<String> allergies;
 
-	@JsonWrapper
 	public void setFirstName(@JsonProperty("firstName") String firstName) {
 		this.firstName = firstName;
 	}
@@ -22,39 +20,35 @@ public class MedicalRecord {
 		return this.firstName;
 	}
 
-	@JsonWrapper
 	public void setLastName(@JsonProperty("lastName") String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public String getLastName() {
 		return this.lastName;
 	}
-	
-	@JsonWrapper
-	public void setBirthdate(@JsonProperty("birthdate") LocalDate birthdate) {
+
+	public void setBirthdate(@JsonProperty("birthdate") String birthdate) {
 		this.birthdate = birthdate;
 	}
 
-	public LocalDate getBirthdate() {
+	public String getBirthdate() {
 		return this.birthdate;
 	}
 
-	@JsonWrapper
-	public void setMedications(@JsonProperty("medications") String medications) {
+	public void setMedications(@JsonProperty("medications") List<String> medications) {
 		this.medications = medications;
 	}
-	
-	public String getMedications() {
+
+	public List<String> getMedications() {
 		return this.medications;
 	}
-	
-	@JsonWrapper
-	public void setAllergies(@JsonProperty("allergies") String allergies) {
+
+	public void setAllergies(@JsonProperty("allergies") List<String> allergies) {
 		this.allergies = allergies;
 	}
-	
-	public String getAllergies() {
+
+	public List<String> getAllergies() {
 		return this.allergies;
 	}
 }

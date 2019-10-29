@@ -1,14 +1,12 @@
 package com.openclassrooms.project5.domain;
 
 import com.jsoniter.annotation.JsonProperty;
-import com.jsoniter.annotation.JsonWrapper;
 
 public class Firestation {
 
 	private String address;
-	private int station;
+	private String station;
 
-	@JsonWrapper
 	public void setAddress(@JsonProperty("address") String address) {
 		this.address = address;
 	}
@@ -17,12 +15,11 @@ public class Firestation {
 		return this.address;
 	}
 
-	@JsonWrapper
-	public void setStation(@JsonProperty("station") int station) {
+	public void setStation(@JsonProperty("station") String station) {
 		this.station = station;
 	}
 
-	public int getStation() {
+	public String getStation() {
 		return this.station;
 	}
 }

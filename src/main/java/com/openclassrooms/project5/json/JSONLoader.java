@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jsoniter.JsonIterator;
+import com.openclassrooms.project5.domain.Firestation;
+import com.openclassrooms.project5.domain.MedicalRecord;
 import com.openclassrooms.project5.repository.FirestationRepository;
 import com.openclassrooms.project5.repository.MedicalRecordRepository;
 import com.openclassrooms.project5.repository.PersonRepository;
@@ -27,7 +30,7 @@ public class JSONLoader {
 		ClassLoader classLoader = getClass().getClassLoader();
 		InputStream inputStream = classLoader.getResourceAsStream("data.json");
 		String data = readFromInputStream(inputStream);
-		System.out.println("Data " + data);
+		// System.out.println("Data " + data);
 		JSONData jsonData = JsonIterator.deserialize(data, JSONData.class);
 	}
 
@@ -40,6 +43,20 @@ public class JSONLoader {
 			}
 		}
 		return resultStringBuilder.toString();
+	}
+
+	private void loadRepository(JSONData jsonData) {
+
+		HashMap<String, Firestation> firestationMap = new HashMap<>();
+		for (Firestation firestation : jsonData.firestations) {
+			firestationMap.put(firestation.getAddress(), firestation);
+		}
+
+		HashMap<String, MedicalRecord> medicalrecordMap = new HashMap<>();
+		for (MedicalRecord medicalrecord : jsonData.medicalrecords) {
+			medicalrecordMap.put(medicalrecord.getFirstName(), medicalrecord);
+			medicalrecordMap.put(medicalrecord.getLastName(), medicalrecord);
+		}
 	}
 
 }
