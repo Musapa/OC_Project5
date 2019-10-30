@@ -12,8 +12,11 @@ public class FirestationRepository {
 
 	private List<Firestation> firestations = new ArrayList<>();
 
-	List<Firestation> getFirestation() {
+	public List<Firestation> getFirestation() {
 		return firestations;
 	}
+	public void add(Firestation firestation) {
+		firestations.add(firestation);
+	} 
 
 }

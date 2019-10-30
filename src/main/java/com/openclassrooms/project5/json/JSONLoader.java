@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.jsoniter.JsonIterator;
 import com.openclassrooms.project5.domain.Firestation;
 import com.openclassrooms.project5.domain.MedicalRecord;
+import com.openclassrooms.project5.domain.Person;
 import com.openclassrooms.project5.repository.FirestationRepository;
 import com.openclassrooms.project5.repository.MedicalRecordRepository;
 import com.openclassrooms.project5.repository.PersonRepository;
@@ -21,7 +22,9 @@ public class JSONLoader {
 
 	@Autowired
 	private FirestationRepository firestationRepository;
+	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
+	@Autowired
 	private PersonRepository personRepository;
 
 	public JSONLoader() throws IOException {
@@ -32,6 +35,7 @@ public class JSONLoader {
 		String data = readFromInputStream(inputStream);
 		// System.out.println("Data " + data);
 		JSONData jsonData = JsonIterator.deserialize(data, JSONData.class);
+		loadRepository(jsonData);
 	}
 
 	private String readFromInputStream(InputStream inputStream) throws IOException {
@@ -50,12 +54,21 @@ public class JSONLoader {
 		HashMap<String, Firestation> firestationMap = new HashMap<>();
 		for (Firestation firestation : jsonData.firestations) {
 			firestationMap.put(firestation.getAddress(), firestation);
+			firestationRepository.add(firestation);
 		}
 
 		HashMap<String, MedicalRecord> medicalrecordMap = new HashMap<>();
 		for (MedicalRecord medicalrecord : jsonData.medicalrecords) {
-			medicalrecordMap.put(medicalrecord.getFirstName(), medicalrecord);
-			medicalrecordMap.put(medicalrecord.getLastName(), medicalrecord);
+			medicalrecordMap.put(medicalrecord.getFirstName() + medicalrecord.getLastName(), medicalrecord);
+			medicalRecordRepository.add(medicalrecord);
+		}
+			
+		for (PersonData personData : jsonData.persons) {
+			Firestation firestation = firestationMap.get(personData.getAddress());
+			MedicalRecord medicalRecord = medicalrecordMap.get(personData.getFirstName() + personData.getLastName());
+
+			
+			personRepository.add(new Person(personData, medicalRecord, firestation));
 		}
 	}
 
