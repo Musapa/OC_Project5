@@ -20,22 +20,26 @@ import com.openclassrooms.project5.repository.PersonRepository;
 @Component
 public class JSONLoader {
 
-	@Autowired
 	private FirestationRepository firestationRepository;
-	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
-	@Autowired
 	private PersonRepository personRepository;
 
-	public JSONLoader() throws IOException {
-		// TODO read JSON file and load into JSONData object
-		// insert into to the repository
+	// constuctor injecton show that repository is created first
+	public JSONLoader(@Autowired FirestationRepository firestationRepository,
+			@Autowired MedicalRecordRepository medicalRecordRepository, @Autowired PersonRepository personRepository)
+			throws IOException {
+
+		this.firestationRepository = firestationRepository;
+		this.medicalRecordRepository = medicalRecordRepository;
+		this.personRepository = personRepository;
+
 		ClassLoader classLoader = getClass().getClassLoader();
 		InputStream inputStream = classLoader.getResourceAsStream("data.json");
 		String data = readFromInputStream(inputStream);
 		// System.out.println("Data " + data);
 		JSONData jsonData = JsonIterator.deserialize(data, JSONData.class);
 		loadRepository(jsonData);
+		System.out.println("Testing " + personRepository.getPersons().size());
 	}
 
 	private String readFromInputStream(InputStream inputStream) throws IOException {
@@ -62,12 +66,11 @@ public class JSONLoader {
 			medicalrecordMap.put(medicalrecord.getFirstName() + medicalrecord.getLastName(), medicalrecord);
 			medicalRecordRepository.add(medicalrecord);
 		}
-			
+
 		for (PersonData personData : jsonData.persons) {
 			Firestation firestation = firestationMap.get(personData.getAddress());
 			MedicalRecord medicalRecord = medicalrecordMap.get(personData.getFirstName() + personData.getLastName());
 
-			
 			personRepository.add(new Person(personData, medicalRecord, firestation));
 		}
 	}

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.openclassrooms.project5.domain.Firestation;
 import com.openclassrooms.project5.domain.MedicalRecord;
 
 @Repository
