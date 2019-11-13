@@ -15,8 +15,7 @@ public class FirestationController {
 	@Autowired
 	private FirestationService firestationService;
 
-	// TODO what is RequestMehod.GET and http://localhost:8080/fire?address=1509
-	// Culver St
+	// TODO what is RequestMehod.GET and http://localhost:8080/fire?address=1509 Culver St
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
 	public Firestation getFirestation(@RequestParam(value = "address") String address) {
 
