@@ -36,10 +36,10 @@ public class JSONLoader {
 		ClassLoader classLoader = getClass().getClassLoader();
 		InputStream inputStream = classLoader.getResourceAsStream("data.json");
 		String data = readFromInputStream(inputStream);
-		// System.out.println("Data " + data);
+		//System.out.println("Data " + data);
 		JSONData jsonData = JsonIterator.deserialize(data, JSONData.class);
 		loadRepository(jsonData);
-		System.out.println("Testing " + personRepository.getPersons().size());
+		//System.out.println("Testing " + personRepository.getPersons().size());
 	}
 
 	private String readFromInputStream(InputStream inputStream) throws IOException {

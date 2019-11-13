@@ -16,6 +16,10 @@ public class Person {
 	private MedicalRecord medicalRecord;
 	private Firestation firestation;
 	
+	public Person() {
+		
+	}
+	
 	public Person (PersonData personData, MedicalRecord medicalRecord, Firestation firestation) {
 		this.firstName = personData.getFirstName();
 		this.lastName = personData.getLastName();

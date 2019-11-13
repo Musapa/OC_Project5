@@ -17,5 +17,5 @@ public class PersonRepository {
 	}
 	public void add(Person person) {
 		persons.add(person);
-	} 
+	}
 }
