@@ -73,7 +73,7 @@ public class JSONLoader {
 			Person person = new Person(personData, medicalRecord, firestation);
 			
 			personRepository.add(person);
-			firestation.getPersons().add(person);
+			//firestation.getPersons().add(person);
 		}
 	}
 

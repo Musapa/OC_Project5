@@ -17,7 +17,7 @@ public class Person {
 	private Firestation firestation;
 	
 	public Person() {
-		
+
 	}
 	
 	public Person (PersonData personData, MedicalRecord medicalRecord, Firestation firestation) {
