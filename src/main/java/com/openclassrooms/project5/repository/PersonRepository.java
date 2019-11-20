@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.project5.domain.Person;
-import com.openclassrooms.project5.exception.ApiException;
 
 @Repository
 public class PersonRepository {
@@ -20,21 +19,27 @@ public class PersonRepository {
 		persons.add(person);
 	}
 	
-	public Person findPersonByEmail(String email) {
+	public List<String> findPersonByCity(String city) {
+		
+		List<String> result = new ArrayList<>();
+		
 		for(Person person : persons) {
-			if (person.getEmail().equals(email)) {
-				return person;
+			if (person.getCity().equals(city)) {
+				result.add(person.getEmail());
 			}
 		}
-		throw new ApiException("Cannot find email.");
+		return result;
 	}
 	
-	public Person findPersonByName(String firstName) {
+	public List<Person> findPersonByName(String firstName, String lastName) {
+		
+		List<Person> result = new ArrayList<>();
+		
 		for(Person person : persons) {
-			if (person.getFirstName().equals(firstName)) {
-				return person;
+			if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				result.add(person);
 			}
 		}
-		throw new ApiException("Cannot find name.");
+		return result;
 	}
 }

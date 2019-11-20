@@ -1,5 +1,7 @@
 package com.openclassrooms.project5.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,11 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 	
-	public Person findPersonByEmail(String email) {
-		return personRepository.findPersonByEmail(email);
+	public List<String> findPersonByCity(String city) {
+		return personRepository.findPersonByCity(city);
 	}
 	
-	public Person findPersonByName(String name) {
-		return personRepository.findPersonByName(name);
+	public List<Person> findPersonByName(String firstName, String lastName) {
+		return personRepository.findPersonByName(firstName, lastName);
 	}
 }

@@ -1,7 +1,6 @@
 package com.openclassrooms.project5.domain;
 
 import com.jsoniter.annotation.JsonProperty;
-import com.openclassrooms.project5.json.PersonData;
 
 public class Person {
 
@@ -14,23 +13,7 @@ public class Person {
 	private String email;
 	
 	private MedicalRecord medicalRecord;
-	private Firestation firestation;
-	
-	public Person() {
 
-	}
-	
-	public Person (PersonData personData, MedicalRecord medicalRecord, Firestation firestation) {
-		this.firstName = personData.getFirstName();
-		this.lastName = personData.getLastName();
-		this.address = personData.getAddress();
-		this.city = personData.getCity();
-		this.zip = personData.getZip();
-		this.phone = personData.getPhone();
-		this.email = personData.getEmail();
-		this.medicalRecord = medicalRecord;
-		this.firestation = firestation;
-	}
 	
 	public void setFirstName(@JsonProperty("firstName") String firstName) {
 		this.firstName = firstName;
@@ -94,13 +77,6 @@ public class Person {
    	}
     public void setMedicalRecord(MedicalRecord medicalRecord) {
         this.medicalRecord = medicalRecord;
-    }
-    
-   	public Firestation getFirestation() {
-   		return firestation;
-   	}
-    public void setFirestation(Firestation firestation) {
-        this.firestation = firestation;
     }
 	
 }

@@ -1,5 +1,7 @@
 package com.openclassrooms.project5.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,15 +18,15 @@ public class PersonController {
 	private PersonService personService;
 	
 	@RequestMapping(value = "/communityEmail", method = RequestMethod.GET, produces = "application/json")
-	public Person getPersonsByEmail(@RequestParam(value = "city") String email) {
+	public List<String> getPersonsByEmail(@RequestParam(value = "city") String city) {
 
-		return personService.findPersonByEmail(email);
+		return personService.findPersonByCity(city);
 	}
 	
 	@RequestMapping(value = "/personInfo", method = RequestMethod.GET, produces = "application/json")
-	public Person getPersonsInfo(@RequestParam(value = "firstName") String name) {
+	public List<Person> getPersonsInfo(@RequestParam(value = "firstName") String firstName, String lastName) {
 
-		return personService.findPersonByName(name);
+		return personService.findPersonByName(firstName, lastName);
 	}
 	
 }

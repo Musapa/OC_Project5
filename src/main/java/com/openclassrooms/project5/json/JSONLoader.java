@@ -67,13 +67,13 @@ public class JSONLoader {
 			medicalRecordRepository.add(medicalrecord);
 		}
 
-		for (PersonData personData : jsonData.persons) {
-			Firestation firestation = firestationMap.get(personData.getAddress());
-			MedicalRecord medicalRecord = medicalrecordMap.get(personData.getFirstName() + personData.getLastName());
-			Person person = new Person(personData, medicalRecord, firestation);
+		for (Person person : jsonData.persons) {
+			Firestation firestation = firestationMap.get(person.getAddress());
+			MedicalRecord medicalRecord = medicalrecordMap.get(person.getFirstName() + person.getLastName());
+			person.setMedicalRecord(medicalRecord);
 			
 			personRepository.add(person);
-			//firestation.getPersons().add(person);
+			firestation.getPersons().add(person);
 		}
 	}
 
