@@ -42,4 +42,16 @@ public class PersonRepository {
 		}
 		return result;
 	}
+	
+	public List<Person> findPersonByAdress(String address) {
+		
+		List<Person> result = new ArrayList<>();
+		
+		for(Person person : persons) {
+			if (person.getAddress().equals(address)) {
+				result.add(person);
+			}
+		}
+		return result;
+	}
 }

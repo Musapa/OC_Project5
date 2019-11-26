@@ -1,5 +1,7 @@
 package com.openclassrooms.project5.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,13 @@ public class FirestationService {
 	
 	public Firestation findFirestationByAddress(String address) {
 		return firestationRepository.findFirestationByAddress(address);
+	}
+	
+	public List<Firestation> findFirestationByNumber(String station) {
+		return firestationRepository.findFirestationByNumber(station);
+	}
+	
+	public List<String> findPhoneByStation(String station) {
+		return firestationRepository.findPhoneByStation(station);
 	}
 }

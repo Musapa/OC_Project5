@@ -18,7 +18,7 @@ public class FirestationRepository {
 	}
 	public void add(Firestation firestation) {
 		firestations.add(firestation);
-	} 
+	}
 
 	public Firestation findFirestationByAddress(String address) {
 		for(Firestation firestation : firestations) {
@@ -27,5 +27,30 @@ public class FirestationRepository {
 			}
 		}
 		throw new ApiException("Cannot find firestation.");
+	}
+	
+	public List<Firestation> findFirestationByNumber(String station) {
+		
+		List<Firestation> result = new ArrayList<>();
+		
+		for(Firestation firestation : firestations) {
+			if (firestation.getStation().equals(station)) {
+				result.add(firestation);
+			}	
+		}
+		return result;
+	}
+	
+	public List<String> findPhoneByStation(String station) {
+		
+		List<String> result = new ArrayList<>();
+		
+		for(Firestation firestation : firestations) {
+			if (firestation.getStation().equals(station)) {
+				//phone ???				
+			}
+		}
+		return result;
+		
 	}
 }

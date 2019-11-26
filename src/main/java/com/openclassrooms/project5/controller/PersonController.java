@@ -29,4 +29,10 @@ public class PersonController {
 		return personService.findPersonByName(firstName, lastName);
 	}
 	
+	@RequestMapping(value = "/childAlert", method = RequestMethod.GET, produces = "application/json")
+	public List<Person> getChildInfo(@RequestParam(value = "address") String address) {
+
+		return personService.findPersonByAdress(address);
+	}
+	
 }
