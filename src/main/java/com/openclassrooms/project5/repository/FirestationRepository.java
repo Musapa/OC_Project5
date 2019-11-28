@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.project5.domain.Firestation;
+import com.openclassrooms.project5.domain.Person;
 import com.openclassrooms.project5.exception.ApiException;
 
 @Repository
@@ -31,6 +32,13 @@ public class FirestationRepository {
 	
 	public List<Firestation> findFirestationByNumber(String station) {
 		
+		/*
+		String stationNumber;
+		List<Person> persons;
+		int numberOfAdult;
+		int numberOfChildren;
+		*/
+		
 		List<Firestation> result = new ArrayList<>();
 		
 		for(Firestation firestation : firestations) {
@@ -46,8 +54,10 @@ public class FirestationRepository {
 		List<String> result = new ArrayList<>();
 		
 		for(Firestation firestation : firestations) {
-			if (firestation.getStation().equals(station)) {
-				//phone ???				
+			if (firestation.getStation().equals(station)) {			
+				for(Person person : firestation.getPersons()) {
+					result.add(person.getPhone());
+				}
 			}
 		}
 		return result;

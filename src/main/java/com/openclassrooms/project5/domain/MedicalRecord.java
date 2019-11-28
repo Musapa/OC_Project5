@@ -1,5 +1,8 @@
 package com.openclassrooms.project5.domain;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.jsoniter.annotation.JsonProperty;
@@ -8,7 +11,7 @@ public class MedicalRecord {
 
 	private String firstName;
 	private String lastName;
-	private String birthdate;
+	private Date birthdate;
 	private List<String> medications;
 	private List<String> allergies;
 
@@ -28,11 +31,11 @@ public class MedicalRecord {
 		return this.lastName;
 	}
 
-	public void setBirthdate(@JsonProperty("birthdate") String birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthdate(@JsonProperty("birthdate") String birthdate) throws ParseException {
+		this.birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate);  
 	}
 
-	public String getBirthdate() {
+	public Date getBirthdate() {
 		return this.birthdate;
 	}
 

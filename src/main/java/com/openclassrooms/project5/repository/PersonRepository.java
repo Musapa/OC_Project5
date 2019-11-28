@@ -1,11 +1,13 @@
 package com.openclassrooms.project5.repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.project5.domain.Person;
+import com.openclassrooms.project5.dto.ChildAlert;
 
 @Repository
 public class PersonRepository {
@@ -19,6 +21,7 @@ public class PersonRepository {
 		persons.add(person);
 	}
 	
+	//http://localhost:8080/communityEmail?city=<city>
 	public List<String> findPersonByCity(String city) {
 		
 		List<String> result = new ArrayList<>();
@@ -31,6 +34,7 @@ public class PersonRepository {
 		return result;
 	}
 	
+	//http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
 	public List<Person> findPersonByName(String firstName, String lastName) {
 		
 		List<Person> result = new ArrayList<>();
@@ -43,13 +47,20 @@ public class PersonRepository {
 		return result;
 	}
 	
-	public List<Person> findPersonByAdress(String address) {
+	//http://localhost:8080/childAlert?address=<address>
+	public ChildAlert findChildAlertByAddress(String address) {
 		
-		List<Person> result = new ArrayList<>();
+		ChildAlert result = new ChildAlert();
+		long now = new Date().getTime();
 		
 		for(Person person : persons) {
-			if (person.getAddress().equals(address)) {
-				result.add(person);
+			if (person.getAddress().equals(address)) {				
+				if((now - (365*18*24*60*60*1000) > person.getMedicalRecord().getBirthdate().getTime())) {
+					result.getAdults().add(person);									
+				}
+				else{
+					result.getChildren().add(person);	
+				}
 			}
 		}
 		return result;

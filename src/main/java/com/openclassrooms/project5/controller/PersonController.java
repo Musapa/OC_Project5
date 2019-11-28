@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Person;
+import com.openclassrooms.project5.dto.ChildAlert;
 import com.openclassrooms.project5.service.PersonService;
 
 @RestController
@@ -30,9 +31,9 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value = "/childAlert", method = RequestMethod.GET, produces = "application/json")
-	public List<Person> getChildInfo(@RequestParam(value = "address") String address) {
+	public ChildAlert getChildInfo(@RequestParam(value = "address") String address) {
 
-		return personService.findPersonByAdress(address);
+		return personService.findChildAlertByAddress(address);
 	}
 	
 }

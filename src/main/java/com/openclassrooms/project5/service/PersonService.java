@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.project5.domain.Person;
+import com.openclassrooms.project5.dto.ChildAlert;
 import com.openclassrooms.project5.repository.PersonRepository;
 
 @Service
@@ -22,8 +23,8 @@ public class PersonService {
 		return personRepository.findPersonByName(firstName, lastName);
 	}
 	
-	public List<Person> findPersonByAdress(String address) {
-		return personRepository.findPersonByAdress(address);
+	public ChildAlert findChildAlertByAddress(String address) {
+		return personRepository.findChildAlertByAddress(address);
 	}
 	
 }
