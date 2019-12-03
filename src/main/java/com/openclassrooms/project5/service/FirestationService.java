@@ -25,4 +25,8 @@ public class FirestationService {
 	public List<String> findPhoneByStation(String station) {
 		return firestationRepository.findPhoneByStation(station);
 	}
+	
+	public List<Firestation> findPeopleByStations(String station) {
+		return firestationRepository.findPeopleByStations(station);
+	}
 }

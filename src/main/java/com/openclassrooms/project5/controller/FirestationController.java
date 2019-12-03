@@ -17,21 +17,32 @@ public class FirestationController {
 	@Autowired
 	private FirestationService firestationService;
 
+	// http://localhost:8080/fire?address=<address>
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
 	public Firestation getFirestation(@RequestParam(value = "address") String address) {
 
 		return firestationService.findFirestationByAddress(address);
 	}
-	
-	@RequestMapping(value = "/firestation", method = RequestMethod.GET, produces = "application/json")
-	public List<Firestation> getFirestationNumber(@RequestParam(value = "stationNumber") String station) {
+
+	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
+	@RequestMapping(value = "/stations", method = RequestMethod.GET, produces = "application/json")
+	public List<Firestation> getFirestationNumber(@RequestParam(value = "stations") String station) {
 
 		return firestationService.findFirestationByNumber(station);
 	}
-	
+
+	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@RequestMapping(value = "/phoneAlert", method = RequestMethod.GET, produces = "application/json")
 	public List<String> getPhoneByStation(@RequestParam(value = "firestation") String station) {
 
 		return firestationService.findPhoneByStation(station);
 	}
+
+	// http://localhost:8080/firestation?stationNumber=<station_number>
+	@RequestMapping(value = "/firestation", method = RequestMethod.GET, produces = "application/json")
+	public List<Firestation> getListOfStations(@RequestParam(value = "stationNumber") String station) {
+
+		return firestationService.findPeopleByStations(station);
+	}
+
 }

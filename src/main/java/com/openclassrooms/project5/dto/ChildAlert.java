@@ -7,7 +7,7 @@ import com.openclassrooms.project5.domain.Person;
 
 public class ChildAlert {
 
-	public List<Person> children;
+	private List<Person> children;
 	private List<Person> adults;
 
 	public ChildAlert() {
