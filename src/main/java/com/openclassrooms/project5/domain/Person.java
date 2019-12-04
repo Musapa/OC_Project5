@@ -1,5 +1,7 @@
 package com.openclassrooms.project5.domain;
 
+import java.util.Date;
+
 import com.jsoniter.annotation.JsonProperty;
 
 public class Person {
@@ -11,10 +13,9 @@ public class Person {
 	private String zip;
 	private String phone;
 	private String email;
-	
+
 	private MedicalRecord medicalRecord;
 
-	
 	public void setFirstName(@JsonProperty("firstName") String firstName) {
 		this.firstName = firstName;
 	}
@@ -22,7 +23,7 @@ public class Person {
 	public String getFirstName() {
 		return this.firstName;
 	}
-	
+
 	public void setLastName(@JsonProperty("lastName") String lastName) {
 		this.lastName = lastName;
 	}
@@ -30,7 +31,7 @@ public class Person {
 	public String getLastName() {
 		return this.lastName;
 	}
-	
+
 	public void setAddress(@JsonProperty("address") String address) {
 		this.address = address;
 	}
@@ -38,7 +39,7 @@ public class Person {
 	public String getAddress() {
 		return this.address;
 	}
-	
+
 	public void setCity(@JsonProperty("city") String city) {
 		this.city = city;
 	}
@@ -46,7 +47,7 @@ public class Person {
 	public String getCity() {
 		return this.city;
 	}
-	
+
 	public void setZip(@JsonProperty("zip") String zip) {
 		this.zip = zip;
 	}
@@ -54,7 +55,7 @@ public class Person {
 	public String getZip() {
 		return this.zip;
 	}
-	
+
 	public void setPhone(@JsonProperty("phone") String phone) {
 		this.phone = phone;
 	}
@@ -62,7 +63,7 @@ public class Person {
 	public String getPhone() {
 		return this.phone;
 	}
-	
+
 	public void setEmail(@JsonProperty("email") String email) {
 		this.email = email;
 	}
@@ -70,13 +71,20 @@ public class Person {
 	public String getEmail() {
 		return this.email;
 	}
-	
-	
-   	public MedicalRecord getMedicalRecord() {
-   		return medicalRecord;
-   	}
-    public void setMedicalRecord(MedicalRecord medicalRecord) {
-        this.medicalRecord = medicalRecord;
-    }
-	
+
+	public MedicalRecord getMedicalRecord() {
+		return medicalRecord;
+	}
+
+	public void setMedicalRecord(MedicalRecord medicalRecord) {
+		this.medicalRecord = medicalRecord;
+	}
+
+	public boolean isChild() {
+		long now = new Date().getTime();
+
+		return (now - (365 * 18 * 24 * 60 * 60 * 1000L) < getMedicalRecord().getBirthdate().getTime());
+
+	}
+
 }

@@ -1,7 +1,6 @@
 package com.openclassrooms.project5.repository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -52,14 +51,13 @@ public class PersonRepository {
 	public ChildAlert findChildAlertByAddress(String address) {
 
 		ChildAlert result = new ChildAlert();
-		long now = new Date().getTime();
 
 		for (Person person : persons) {
 			if (person.getAddress().equals(address)) {
-				if ((now - (365 * 18 * 24 * 60 * 60 * 1000L) > person.getMedicalRecord().getBirthdate().getTime())) {
-					result.getAdults().add(person);
-				} else {
+				if (person.isChild()) {
 					result.getChildren().add(person);
+				} else {
+					result.getAdults().add(person);					
 				}
 			}
 		}

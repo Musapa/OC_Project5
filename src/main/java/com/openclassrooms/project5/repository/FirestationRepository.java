@@ -1,14 +1,12 @@
 package com.openclassrooms.project5.repository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.project5.domain.Firestation;
 import com.openclassrooms.project5.domain.Person;
-import com.openclassrooms.project5.dto.ChildAlert;
 import com.openclassrooms.project5.exception.ApiException;
 
 @Repository
@@ -63,30 +61,15 @@ public class FirestationRepository {
 	}
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
-	public List<Firestation> findPeopleByStations(String station) {
+	public List<Firestation> findByStation(String station) {
 		
-		ChildAlert result = new ChildAlert();
-		long now = new Date().getTime();
-		List<Person> persons;
-
-
-		for (Person person : persons) {
-			if (person.getAddress().equals(station)) {
-				if ((now - (365 * 18 * 24 * 60 * 60 * 1000L) > person.getMedicalRecord().getBirthdate().getTime())) {
-					result.getAdults().add(person);
-				} else {
-					result.getChildren().add(person);
-				}
+		List<Firestation> result = new ArrayList<>();
+		
+		for (Firestation firestation : firestations) {
+			if (firestation.getStation().equals(station)) {
+				result.add(firestation);
 			}
 		}
-		int numberOfAdults;
-		numberOfAdults = result.getAdults().size();
-		System.out.println("Number of adults: " + numberOfAdults);
-		
-		int numberOfChildren;
-		numberOfChildren = result.getChildren().size();
-		System.out.println("Number of children: " + numberOfChildren);
-		
 		return result;
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Firestation;
+import com.openclassrooms.project5.dto.Station;
 import com.openclassrooms.project5.service.FirestationService;
 
 @RestController
@@ -25,7 +26,7 @@ public class FirestationController {
 	}
 
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
-	@RequestMapping(value = "/stations", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/flood/stations", method = RequestMethod.GET, produces = "application/json")
 	public List<Firestation> getFirestationNumber(@RequestParam(value = "stations") String station) {
 
 		return firestationService.findFirestationByNumber(station);
@@ -40,9 +41,9 @@ public class FirestationController {
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
 	@RequestMapping(value = "/firestation", method = RequestMethod.GET, produces = "application/json")
-	public List<Firestation> getListOfStations(@RequestParam(value = "stationNumber") String station) {
+	public Station getListOfStations(@RequestParam(value = "stationNumber") String station) {
 
-		return firestationService.findPeopleByStations(station);
+		return firestationService.findByStation(station);
 	}
 
 }
