@@ -21,8 +21,13 @@ public class FirestationService {
 		return firestationRepository.findFirestationByAddress(address);
 	}
 
-	public List<Firestation> findFirestationByNumber(String station) {
-		return firestationRepository.findFirestationByNumber(station);
+	public List<Firestation> findFirestationByNumbers(String stations[]) {
+		List<Firestation> result = new ArrayList<>();
+
+		for (String station : stations) {
+			result.addAll(firestationRepository.findFirestationByNumber(station));
+		}
+		return result;
 	}
 
 	public List<String> findPhoneByStation(String station) {
