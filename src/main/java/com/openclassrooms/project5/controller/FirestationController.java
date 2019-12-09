@@ -21,7 +21,6 @@ public class FirestationController {
 	private FirestationService firestationService;
 
 	// http://localhost:8080/fire?address=<address>
-	
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
 	public Firestation getFirestation(@RequestParam(value = "address") String address) {
 
