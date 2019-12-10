@@ -1,10 +1,11 @@
 package com.openclassrooms.project5;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.openclassrooms.project5.controller.FirestationController;
-import com.openclassrooms.project5.controller.PersonController;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.project5.domain.Firestation;
 
 @RunWith(SpringRunner.class)
@@ -31,29 +33,44 @@ public class FirestationControllerTest {
 	private WebApplicationContext webContext;
 
 	@Autowired
-	private FirestationController firestationController;
-	@Autowired
-	private PersonController personController;
-
-	private Firestation firestation;
+	private ObjectMapper objectMapper;
 
 	@Before
 	public void setupMockmvc() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webContext).build();
 	}
 
-	@Before
-	public void create() {
-		firestation = new Firestation();
-		firestation.setAddress("Culver Street");
-		firestation.setStation("Station 1");
+	@Test
+	public void getFirestationTest() throws Exception {
+		try {
+			mockMvc.perform(get("/fire").param("address", "bad address"));
+			fail("Exception expected");
+		} catch (Throwable e) {
+
+		}
+		 MvcResult result = mockMvc.perform(get("/fire").param("address", "1509 Culver St")).andExpect(status().isOk()).andReturn();
+		 String json = result.getResponse().getContentAsString();
+		 Firestation firestation = objectMapper.readValue(json, Firestation.class);
+		 
+		 assertEquals("5 people expected", 5, firestation.getPersons().size());
 	}
 	
 	@Test
-	public void getFirestationTest() throws Exception {
-		mockMvc.perform(post("/fire").param("address", firestation.getAddress().toString()))
-				.andExpect(view().name("Culver Street")).andExpect(model().errorCount(0))
-				.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("Cannot find firestation."));
+	public void getFirestationNumberTest() throws Exception {
+		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "1")).andExpect(status().isOk()).andReturn();
+		String json = result.getResponse().getContentAsString();
+		List<Firestation> firestation = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {});
+		
+		assertEquals("station 1", true, firestation.addAll(firestation));
+	}
+
+	@Test
+	public void findPhoneByStationTest() throws Exception {
+		 MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "4")).andExpect(status().isOk()).andReturn();
+		 String json = result.getResponse().getContentAsString();
+		 Firestation firestation = objectMapper.readValue(json, Firestation.class);
+		 
+		 assertEquals("2 adresses expected", 2, firestation.getAddress().length());
 	}
 
 }

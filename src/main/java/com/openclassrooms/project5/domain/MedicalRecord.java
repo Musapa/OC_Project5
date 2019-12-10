@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jsoniter.annotation.JsonProperty;
 
 public class MedicalRecord {
@@ -35,6 +36,7 @@ public class MedicalRecord {
 		this.birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate);  
 	}
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	public Date getBirthdate() {
 		return this.birthdate;
 	}
