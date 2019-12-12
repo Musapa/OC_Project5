@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.project5.domain.Firestation;
+import com.openclassrooms.project5.dto.Station;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,36 +42,52 @@ public class FirestationControllerTest {
 	}
 
 	@Test
-	public void getFirestationTest() throws Exception {
+	public void firestationTest() throws Exception {
 		try {
 			mockMvc.perform(get("/fire").param("address", "bad address"));
 			fail("Exception expected");
 		} catch (Throwable e) {
 
 		}
-		 MvcResult result = mockMvc.perform(get("/fire").param("address", "1509 Culver St")).andExpect(status().isOk()).andReturn();
-		 String json = result.getResponse().getContentAsString();
-		 Firestation firestation = objectMapper.readValue(json, Firestation.class);
-		 
-		 assertEquals("5 people expected", 5, firestation.getPersons().size());
-	}
-	
-	@Test
-	public void getFirestationNumberTest() throws Exception {
-		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "1")).andExpect(status().isOk()).andReturn();
+		MvcResult result = mockMvc.perform(get("/fire").param("address", "1509 Culver St")).andExpect(status().isOk())
+				.andReturn();
 		String json = result.getResponse().getContentAsString();
-		List<Firestation> firestation = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {});
-		
-		assertEquals("station 1", true, firestation.addAll(firestation));
+		Firestation firestations = objectMapper.readValue(json, Firestation.class);
+
+		assertEquals("5 people expected", 5, firestations.getPersons().size());
 	}
 
 	@Test
-	public void findPhoneByStationTest() throws Exception {
-		 MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "4")).andExpect(status().isOk()).andReturn();
-		 String json = result.getResponse().getContentAsString();
-		 Firestation firestation = objectMapper.readValue(json, Firestation.class);
-		 
-		 assertEquals("2 adresses expected", 2, firestation.getAddress().length());
+	public void floodStationTest() throws Exception {
+		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "1")).andExpect(status().isOk())
+				.andReturn();
+		String json = result.getResponse().getContentAsString();
+		List<Firestation> firestations = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {
+		});
+
+		assertEquals("There should be 3 stations for station 1", 3, firestations.size());
+	}
+
+	@Test
+	public void phoneAlertTest() throws Exception {
+		MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "4")).andExpect(status().isOk())
+				.andReturn();
+		String json = result.getResponse().getContentAsString();
+		List<String> phoneNumbers = objectMapper.readValue(json, new TypeReference<List<String>>() {
+		});
+
+		assertEquals("4 phone numbers are expected", 4, phoneNumbers.size());
+	}
+
+	@Test
+	public void stationNumberTest() throws Exception {
+		MvcResult result = mockMvc.perform(get("/firestation").param("stationNumber", "1")).andExpect(status().isOk())
+				.andReturn();
+		String json = result.getResponse().getContentAsString();
+		Station listOfStations = objectMapper.readValue(json, Station.class);
+
+		assertEquals("In station number 1 we expected 1 children", 1, listOfStations.getNumberOfChildren());
+		assertEquals("In station number 1 we expected 4 adults", 5, listOfStations.getNumberOfAdults());
 	}
 
 }
