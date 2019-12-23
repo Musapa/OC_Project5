@@ -17,25 +17,31 @@ public class FirestationService {
 	@Autowired
 	private FirestationRepository firestationRepository;
 
-	public Firestation findFirestationByAddress(String address) {
-		return firestationRepository.findFirestationByAddress(address);
+	// ---------- URLs ----------
+	
+	// http://localhost:8080/fire?address=<address>
+	public Firestation getFirestationByAddress(String address) {
+		return firestationRepository.getFirestationByAddress(address);
 	}
 
-	public List<Firestation> findFirestationByNumbers(String stations[]) {
+	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
+	public List<Firestation> getFirestationHouseholdsByStationNumbers(String stations[]) {
 		List<Firestation> result = new ArrayList<>();
 
 		for (String station : stations) {
-			result.addAll(firestationRepository.findFirestationByNumber(station));
+			result.addAll(firestationRepository.getFirestationHouseholdsByStationNumbers(station));
 		}
 		return result;
 	}
 
-	public List<String> findPhoneByStation(String station) {
-		return firestationRepository.findPhoneByStation(station);
+	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
+	public List<String> getPhoneNumbersByStationNumber(String station) {
+		return firestationRepository.getPhoneNumbersByStationNumber(station);
 	}
 
-	public Station findByStation(String station) {
-		List<Firestation> firestations = firestationRepository.findByStation(station);
+	// http://localhost:8080/firestation?stationNumber=<station_number>
+	public Station getListOfPeopleByStationNumber(String station) {
+		List<Firestation> firestations = firestationRepository.getListOfPeopleByStationNumber(station);
 		List<Person> persons = new ArrayList<>();
 		int numberOfChildren = 0;
 		int numberOfAdults = 0;
@@ -52,5 +58,10 @@ public class FirestationService {
 			}
 		}
 		return new Station(station, persons, numberOfAdults, numberOfChildren);
+	}
+	// ---------- END OF URLs ----------
+	
+	public Firestation createFirestation(Firestation firestation) {
+		return firestationRepository.createFirestation(firestation);
 	}
 }

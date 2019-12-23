@@ -22,8 +22,10 @@ public class FirestationRepository {
 		firestations.add(firestation);
 	}
 
+	// ---------- URLs ----------
+	
 	// http://localhost:8080/fire?address=<address>
-	public Firestation findFirestationByAddress(String address) {
+	public Firestation getFirestationByAddress(String address) {
 		for (Firestation firestation : firestations) {
 			if (firestation.getAddress().equals(address)) {
 				return firestation;
@@ -33,7 +35,7 @@ public class FirestationRepository {
 	}
 
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
-	public List<Firestation> findFirestationByNumber(String station) {
+	public List<Firestation> getFirestationHouseholdsByStationNumbers(String station) {
 
 		List<Firestation> result = new ArrayList<>();
 
@@ -46,7 +48,7 @@ public class FirestationRepository {
 	}
 
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
-	public List<String> findPhoneByStation(String station) {
+	public List<String> getPhoneNumbersByStationNumber(String station) {
 
 		List<String> result = new ArrayList<>();
 
@@ -61,7 +63,7 @@ public class FirestationRepository {
 	}
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
-	public List<Firestation> findByStation(String station) {
+	public List<Firestation> getListOfPeopleByStationNumber(String station) {
 		
 		List<Firestation> result = new ArrayList<>();
 		
@@ -71,6 +73,12 @@ public class FirestationRepository {
 			}
 		}
 		return result;
+	}
+	// ---------- END OF URLs ----------
+	
+	public Firestation createFirestation(Firestation firestation) {
+		firestations.add(firestation);
+		return firestation;
 	}
 
 }

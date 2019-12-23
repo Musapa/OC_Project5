@@ -21,8 +21,10 @@ public class PersonRepository {
 		persons.add(person);
 	}
 
+	// ---------- URLs ----------
+	
 	// http://localhost:8080/communityEmail?city=<city>
-	public List<String> findPersonByCity(String city) {
+	public List<String> getEmailsByCity(String city) {
 
 		List<String> result = new ArrayList<>();
 
@@ -35,7 +37,7 @@ public class PersonRepository {
 	}
 
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
-	public List<Person> findPersonByName(String firstName, String lastName) {
+	public List<Person> getPersonInfoByName(String firstName, String lastName) {
 
 		List<Person> result = new ArrayList<>();
 
@@ -48,7 +50,7 @@ public class PersonRepository {
 	}
 
 	// http://localhost:8080/childAlert?address=<address>
-	public ChildAlert findChildAlertByAddress(String address) {
+	public ChildAlert getChildAlertByAddress(String address) {
 
 		ChildAlert result = new ChildAlert();
 
@@ -57,10 +59,11 @@ public class PersonRepository {
 				if (person.isChild()) {
 					result.getChildren().add(person);
 				} else {
-					result.getAdults().add(person);					
+					result.getAdults().add(person);
 				}
 			}
 		}
 		return result;
 	}
+	// ---------- END OF URLs ----------
 }

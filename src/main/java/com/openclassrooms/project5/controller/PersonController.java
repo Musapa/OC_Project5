@@ -18,35 +18,37 @@ import com.openclassrooms.project5.service.PersonService;
 public class PersonController {
 
 	private static final Logger log = LoggerFactory.getLogger(PersonController.class);
-	
+
 	@Autowired
 	private PersonService personService;
 
+	// ---------- URLs ----------
+	
 	// http://localhost:8080/communityEmail?city=<city>
 	@RequestMapping(value = "/communityEmail", method = RequestMethod.GET, produces = "application/json")
-	public List<String> getPersonsByEmail(@RequestParam(value = "city") String city) {
+	public List<String> getEmailsByCity(@RequestParam(value = "city") String city) {
 		log.info("Get email address on city: " + city);
-		List<String> email = personService.findPersonByCity(city);
+		List<String> email = personService.getEmailsByCity(city);
 		log.info("Found " + email.size() + " email addresses on " + city);
 		return email;
 	}
 
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
 	@RequestMapping(value = "/personInfo", method = RequestMethod.GET, produces = "application/json")
-	public List<Person> getPersonsInfo(@RequestParam(value = "firstName") String firstName, String lastName) {
+	public List<Person> getPersonsInfoByName(@RequestParam(value = "firstName") String firstName, String lastName) {
 		log.info("Get first name of person: " + firstName + " and get last name of person: " + lastName);
-		List<Person> personInfo = personService.findPersonByName(firstName, lastName);
+		List<Person> personInfo = personService.getPersonInfoByName(firstName, lastName);
 		log.info("There is a " + personInfo.size() + " person");
 		return personInfo;
 	}
 
 	// http://localhost:8080/childAlert?address=<address>
 	@RequestMapping(value = "/childAlert", method = RequestMethod.GET, produces = "application/json")
-	public ChildAlert getChildInfo(@RequestParam(value = "address") String address) {
+	public ChildAlert getChildAlertByAddress(@RequestParam(value = "address") String address) {
 		log.info("Get number of children and adults on: " + address);
-		ChildAlert childInfo = personService.findChildAlertByAddress(address);
+		ChildAlert childInfo = personService.getChildAlertByAddress(address);
 		log.info("There are " + childInfo.getChildren().size() + " childrens and " + childInfo.getAdults().size() + " adults on " + address);
 		return childInfo;
 	}
-
+	// ---------- END OF URLs ----------
 }

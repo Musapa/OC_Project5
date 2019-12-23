@@ -14,17 +14,22 @@ public class PersonService {
 
 	@Autowired
 	private PersonRepository personRepository;
+
+	// ---------- URLs ----------
 	
-	public List<String> findPersonByCity(String city) {
-		return personRepository.findPersonByCity(city);
+	// http://localhost:8080/communityEmail?city=<city>
+	public List<String> getEmailsByCity(String city) {
+		return personRepository.getEmailsByCity(city);
+	}
+
+	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
+	public List<Person> getPersonInfoByName(String firstName, String lastName) {
+		return personRepository.getPersonInfoByName(firstName, lastName);
 	}
 	
-	public List<Person> findPersonByName(String firstName, String lastName) {
-		return personRepository.findPersonByName(firstName, lastName);
+	// http://localhost:8080/childAlert?address=<address>
+	public ChildAlert getChildAlertByAddress(String address) {
+		return personRepository.getChildAlertByAddress(address);
 	}
-	
-	public ChildAlert findChildAlertByAddress(String address) {
-		return personRepository.findChildAlertByAddress(address);
-	}
-	
+	// ---------- END OF URLs ----------
 }
