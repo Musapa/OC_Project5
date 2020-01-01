@@ -61,7 +61,7 @@ public class PersonControllerTest {
 	}
 	
 	@Test
-	public void childAlertrTest() throws Exception {
+	public void childAlertTest() throws Exception {
 		MvcResult result = mockMvc.perform(get("/childAlert").param("address", "892 Downing Ct")).andExpect(status().isOk())
 				.andReturn();
 		String json = result.getResponse().getContentAsString();

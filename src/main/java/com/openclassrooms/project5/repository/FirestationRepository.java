@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.openclassrooms.project5.domain.Firestation;
 import com.openclassrooms.project5.domain.Person;
-import com.openclassrooms.project5.exception.ApiException;
 
 @Repository
 public class FirestationRepository {
@@ -23,7 +22,7 @@ public class FirestationRepository {
 	}
 
 	// ---------- URLs ----------
-	
+
 	// http://localhost:8080/fire?address=<address>
 	public Firestation getFirestationByAddress(String address) {
 		for (Firestation firestation : firestations) {
@@ -31,7 +30,7 @@ public class FirestationRepository {
 				return firestation;
 			}
 		}
-		throw new ApiException("Cannot find firestation.");
+		return null;
 	}
 
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
@@ -64,9 +63,9 @@ public class FirestationRepository {
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
 	public List<Firestation> getListOfPeopleByStationNumber(String station) {
-		
+
 		List<Firestation> result = new ArrayList<>();
-		
+
 		for (Firestation firestation : firestations) {
 			if (firestation.getStation().equals(station)) {
 				result.add(firestation);
@@ -75,10 +74,32 @@ public class FirestationRepository {
 		return result;
 	}
 	// ---------- END OF URLs ----------
-	
+
 	public Firestation createFirestation(Firestation firestation) {
 		firestations.add(firestation);
 		return firestation;
+	}
+
+	// TODO find getFirestationByAddress and change address if its not null
+	public Firestation updateFirestation(Firestation firestation) {
+		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
+		if (findFirestation != null) {
+			findFirestation.setAddress(firestation.getAddress());
+			findFirestation.setStation(firestation.getStation());
+			return firestation;
+		}
+		return null;
+	}
+
+	public boolean deleteFirestation(Firestation firestation) {
+		for (Firestation findFirestation : firestations) {
+			if (findFirestation.getStation().equals(firestation.getStation())
+					&& findFirestation.getAddress().equals(firestation.getAddress())) {
+				firestations.remove(findFirestation);
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

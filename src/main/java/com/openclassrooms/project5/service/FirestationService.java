@@ -64,4 +64,12 @@ public class FirestationService {
 	public Firestation createFirestation(Firestation firestation) {
 		return firestationRepository.createFirestation(firestation);
 	}
+	
+	public Firestation updateFirestation(Firestation firestation) {
+		return firestationRepository.updateFirestation(firestation);
+	}
+	
+	public boolean deleteFirestation(Firestation firestation) {
+		return firestationRepository.deleteFirestation(firestation);
+	}
 }

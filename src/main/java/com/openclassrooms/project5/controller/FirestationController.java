@@ -9,13 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Firestation;
@@ -32,68 +29,98 @@ public class FirestationController {
 	private FirestationService firestationService;
 
 	// ---------- URLs ----------
-	
+
 	// http://localhost:8080/fire?address=<address>
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Firestation> getFirestationByAddress(@RequestParam(value = "address") String address) {
 		log.info("Get Firestation with address: " + address);
 		Firestation firestation = firestationService.getFirestationByAddress(address);
-		log.info("Found station number: " + firestation.getStation() + "by " + address);
 
-	    return ResponseEntity.ok().body(firestation);
-	
+		if (firestation != null) {
+			log.info("Found station number: " + firestation.getStation() + "by " + address);
+			return ResponseEntity.ok().body(firestation);
+		} else {
+			log.error("Cannot find station with " + address);
+			return ResponseEntity.notFound().build();
+		}
+
 	}
 
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
 	@RequestMapping(value = "/flood/stations", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<Firestation>> getFirestationHouseholdsByStationNumbers(@RequestParam(value = "stations") String station) {
+	public ResponseEntity<List<Firestation>> getFirestationHouseholdsByStationNumbers(
+			@RequestParam(value = "stations") String station) {
 		log.info("Get Firestation with station number " + station);
 		String[] stations = station.split(",");
 		List<Firestation> firestation = firestationService.getFirestationHouseholdsByStationNumbers(stations);
-		log.info("On station " + station + " found " + firestation.size() + " households.");
-				
-	    if (station == "1" || station == "2" || station == "3" || station == "4" || station == "5") {
-	        return ResponseEntity.status(HttpStatus.OK).body(firestation);
-	    } 
-	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(firestation);
+
+		if (firestation.size() > 0) {
+			log.info("On station " + station + " found " + firestation.size() + " households.");
+			return ResponseEntity.status(HttpStatus.OK).body(firestation);
+		} else {
+			log.error("Cannot find households with " + station);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(firestation);
+		}
 	}
 
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@RequestMapping(value = "/phoneAlert", method = RequestMethod.GET, produces = "application/json")
-	public List<String> getPhoneNumbersByStationNumber(@RequestParam(value = "firestation") String station) {
+	public ResponseEntity<List<String>> getPhoneNumbersByStationNumber(
+			@RequestParam(value = "firestation") String station) {
 		log.info("Get phone numbers by station number " + station);
 		List<String> result = new ArrayList<>(
 				new HashSet<>(firestationService.getPhoneNumbersByStationNumber(station)));
-		log.info("There are " + result.size() + " phone nmubers in station number " + station);
-		return result;
+
+		if (result.size() > 0) {
+			log.info("There are " + result.size() + " phone numbers in station number " + station);
+			return ResponseEntity.ok().body(result);
+		} else {
+			log.error("Cannot find phone numbers with" + station);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+		}
 	}
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
 	@RequestMapping(value = "/firestation", method = RequestMethod.GET, produces = "application/json")
-	public Station getListOfPeopleByStationNumber(@RequestParam(value = "stationNumber") String station) {
-		log.info("Get a list of people (adults and children) serviced by station number: " + station);
-		Station firestation = firestationService.getListOfPeopleByStationNumber(station);
-		log.info("Number of adults:" + firestation.getNumberOfAdults() + " Number of children:"
-				+ firestation.getNumberOfChildren());
-		return firestation;
+	public ResponseEntity<Station> getListOfPeopleByStationNumber(
+			@RequestParam(value = "stationNumber") String stationNumber) {
+		log.info("Get a list of people (adults and children) serviced by station number: " + stationNumber);
+		Station station = firestationService.getListOfPeopleByStationNumber(stationNumber);
+
+		if (station.getPersons().size() > 0) {
+			log.info("Number of adults:" + station.getNumberOfAdults() + " Number of children:"
+					+ station.getNumberOfChildren());
+			return ResponseEntity.ok().body(station);
+		} else {
+			log.error("Cannot find phone numbers with" + stationNumber);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(station);
+		}
 	}
 	// ---------- END OF URLs ----------
 
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	@ResponseBody
-	public FirestationDTO addFirestaion(@RequestBody FirestationDTO firestationDTO) {
+	@RequestMapping(value = "/firestation", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<FirestationDTO> addFirestaion(@RequestBody FirestationDTO firestationDTO) {
 		Firestation firestation = convertToEntity(firestationDTO);
 		Firestation firestationCreated = firestationService.createFirestation(firestation);
-		return convertToDto(firestationCreated);
+		return ResponseEntity.ok().body(convertToDto(firestationCreated));
 	}
 
-	public Firestation updateFirestaion() {
-		return null;
+	@RequestMapping(value = "/firestation", method = RequestMethod.PUT, produces = "application/json")
+	public ResponseEntity<FirestationDTO> updateFirestaion(@RequestBody FirestationDTO firestationDTO) {
+		Firestation firestation = convertToEntity(firestationDTO);
+		// TODO update firestation
+		Firestation firestationUpdated = firestationService.createFirestation(firestation);
+		return ResponseEntity.ok().body(convertToDto(firestationUpdated));
 	}
 
-	public Firestation deleteFirestaion() {
-		return null;
+	@RequestMapping(value = "/firestation", method = RequestMethod.DELETE, produces = "application/json")
+	public ResponseEntity<Firestation> deleteFirestaion(@RequestBody FirestationDTO firestationDTO) {
+		Firestation firestation = convertToEntity(firestationDTO);
+		
+		if (firestationService.deleteFirestation(firestation)) {
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 	private Firestation convertToEntity(FirestationDTO firestationDTO) {
