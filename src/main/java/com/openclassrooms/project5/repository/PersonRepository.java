@@ -21,6 +21,15 @@ public class PersonRepository {
 		persons.add(person);
 	}
 
+	public Person getPerson(String firstName, String lastName) {
+		for (Person person : persons) {
+			if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				return person;
+			}
+		}
+		return null;
+	}
+	
 	// ---------- URLs ----------
 	
 	// http://localhost:8080/communityEmail?city=<city>
@@ -37,7 +46,7 @@ public class PersonRepository {
 	}
 
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
-	public List<Person> getPersonInfoByName(String firstName, String lastName) {
+	public List<Person> getPersonsInfoByFirstNameLastName(String firstName, String lastName) {
 
 		List<Person> result = new ArrayList<>();
 
@@ -50,7 +59,7 @@ public class PersonRepository {
 	}
 
 	// http://localhost:8080/childAlert?address=<address>
-	public ChildAlert getChildAlertByAddress(String address) {
+	public ChildAlert getChildrenInfoAlertByAddress(String address) {
 
 		ChildAlert result = new ChildAlert();
 
@@ -65,5 +74,40 @@ public class PersonRepository {
 		}
 		return result;
 	}
+	
 	// ---------- END OF URLs ----------
+	
+	
+	// ---------- ENDPOINTS ----------
+	
+	public Person createPerson(Person person) {
+		persons.add(person);
+		return person;
+	}
+	
+	public Person updatePerson(Person person) {
+		Person findPerson = getPerson(person.getFirstName(), person.getLastName());
+		if (findPerson != null) {
+			findPerson.setAddress(person.getAddress());
+			findPerson.setCity(person.getCity());
+			findPerson.setEmail(person.getEmail());
+			findPerson.setMedicalRecord(person.getMedicalRecord());
+			findPerson.setPhone(person.getPhone());
+			findPerson.setZip(person.getZip());
+			return person;
+		}
+		return null;
+	}
+	
+	public boolean deletePerson(Person person) {
+		for (Person findPerson : persons) {
+			if (findPerson.getFirstName().equals(person.getFirstName()) && findPerson.getLastName().equals(person.getLastName())) {
+				persons.remove(findPerson);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 }

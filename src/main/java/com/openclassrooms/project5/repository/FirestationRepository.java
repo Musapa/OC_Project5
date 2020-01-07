@@ -73,8 +73,12 @@ public class FirestationRepository {
 		}
 		return result;
 	}
+	
 	// ---------- END OF URLs ----------
 
+	
+	// ---------- ENDPOINTS ----------
+	
 	public Firestation createFirestation(Firestation firestation) {
 		firestations.add(firestation);
 		return firestation;

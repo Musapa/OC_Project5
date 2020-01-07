@@ -16,6 +16,17 @@ public class Person {
 
 	private MedicalRecord medicalRecord;
 
+	public Person(String firstName, String lastName, String address, String city, String zip, String phone,String email, MedicalRecord medicalRecord) {
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setAddress(address);
+		this.setCity(city);
+		this.setZip(zip);
+		this.setPhone(phone);
+		this.setEmail(email);
+		this.setMedicalRecord(medicalRecord);
+	}
+
 	public void setFirstName(@JsonProperty("firstName") String firstName) {
 		this.firstName = firstName;
 	}

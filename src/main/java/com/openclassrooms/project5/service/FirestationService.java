@@ -61,6 +61,9 @@ public class FirestationService {
 	}
 	// ---------- END OF URLs ----------
 	
+	
+	// ---------- ENDPOINTS ----------
+	
 	public Firestation createFirestation(Firestation firestation) {
 		return firestationRepository.createFirestation(firestation);
 	}
@@ -72,4 +75,6 @@ public class FirestationService {
 	public boolean deleteFirestation(Firestation firestation) {
 		return firestationRepository.deleteFirestation(firestation);
 	}
+	
+	// ---------- END OF ENDPOINTS ----------
 }

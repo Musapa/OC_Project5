@@ -48,8 +48,7 @@ public class FirestationController {
 
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
 	@RequestMapping(value = "/flood/stations", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<Firestation>> getFirestationHouseholdsByStationNumbers(
-			@RequestParam(value = "stations") String station) {
+	public ResponseEntity<List<Firestation>> getFirestationHouseholdsByStationNumbers(@RequestParam(value = "stations") String station) {
 		log.info("Get Firestation with station number " + station);
 		String[] stations = station.split(",");
 		List<Firestation> firestation = firestationService.getFirestationHouseholdsByStationNumbers(stations);
@@ -65,11 +64,10 @@ public class FirestationController {
 
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@RequestMapping(value = "/phoneAlert", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<String>> getPhoneNumbersByStationNumber(
-			@RequestParam(value = "firestation") String station) {
+	public ResponseEntity<List<String>> getPhoneNumbersByStationNumber(@RequestParam(value = "firestation") String station) {
 		log.info("Get phone numbers by station number " + station);
 		List<String> result = new ArrayList<>(
-				new HashSet<>(firestationService.getPhoneNumbersByStationNumber(station)));
+		new HashSet<>(firestationService.getPhoneNumbersByStationNumber(station)));
 
 		if (result.size() > 0) {
 			log.info("There are " + result.size() + " phone numbers in station number " + station);
@@ -82,8 +80,7 @@ public class FirestationController {
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
 	@RequestMapping(value = "/firestation", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<Station> getListOfPeopleByStationNumber(
-			@RequestParam(value = "stationNumber") String stationNumber) {
+	public ResponseEntity<Station> getListOfPeopleByStationNumber(@RequestParam(value = "stationNumber") String stationNumber) {
 		log.info("Get a list of people (adults and children) serviced by station number: " + stationNumber);
 		Station station = firestationService.getListOfPeopleByStationNumber(stationNumber);
 
@@ -98,6 +95,9 @@ public class FirestationController {
 	}
 	// ---------- END OF URLs ----------
 
+	
+	// ---------- ENDPOINTS ----------
+	
 	@RequestMapping(value = "/firestation", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<FirestationDTO> addFirestaion(@RequestBody FirestationDTO firestationDTO) {
 		Firestation firestation = convertToEntity(firestationDTO);
@@ -108,13 +108,13 @@ public class FirestationController {
 	@RequestMapping(value = "/firestation", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<FirestationDTO> updateFirestaion(@RequestBody FirestationDTO firestationDTO) {
 		Firestation firestation = convertToEntity(firestationDTO);
-		// TODO update firestation
-		Firestation firestationUpdated = firestationService.createFirestation(firestation);
+		//TODO update Firestation
+		Firestation firestationUpdated = firestationService.updateFirestation(firestation);
 		return ResponseEntity.ok().body(convertToDto(firestationUpdated));
 	}
 
 	@RequestMapping(value = "/firestation", method = RequestMethod.DELETE, produces = "application/json")
-	public ResponseEntity<Firestation> deleteFirestaion(@RequestBody FirestationDTO firestationDTO) {
+	public ResponseEntity<FirestationDTO> deleteFirestaion(@RequestBody FirestationDTO firestationDTO) {
 		Firestation firestation = convertToEntity(firestationDTO);
 		
 		if (firestationService.deleteFirestation(firestation)) {
@@ -123,11 +123,13 @@ public class FirestationController {
 		return ResponseEntity.notFound().build();
 	}
 
-	private Firestation convertToEntity(FirestationDTO firestationDTO) {
-		return new Firestation(firestationDTO.getAddress(), firestationDTO.getStation());
-	}
-
+	// ---------- END OF ENDPOINTS ----------
+	
 	private FirestationDTO convertToDto(Firestation firestation) {
 		return new FirestationDTO(firestation.getAddress(), firestation.getStation());
+	}
+	
+	private Firestation convertToEntity(FirestationDTO firestationDTO) {
+		return new Firestation(firestationDTO.getAddress(), firestationDTO.getStation());
 	}
 }

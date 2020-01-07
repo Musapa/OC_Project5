@@ -48,8 +48,7 @@ public class FirestationControllerTest {
 	// VALID http://localhost:8080/fire?address=<address>
 	@Test
 	public void peopleValidFirestationAddress() throws Exception {
-		MvcResult result = mockMvc.perform(get("/fire").param("address", "1509 Culver St")).andExpect(status().isOk())
-				.andReturn();
+		MvcResult result = mockMvc.perform(get("/fire").param("address", "1509 Culver St")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
 		Firestation firestations = objectMapper.readValue(json, Firestation.class);
 
@@ -62,28 +61,22 @@ public class FirestationControllerTest {
 		mockMvc.perform(get("/fire").param("address", "bad address")).andExpect(status().isNotFound());
 	}
 
-	// VALID http://localhost:8080/flood/stations?stations=<a list of
-	// station_numbers>
+	// VALID http://localhost:8080/flood/stations?stations=<a list of station_numbers>
 	@Test
 	public void floodStationValidStationNumbers() throws Exception {
-		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "1")).andExpect(status().isOk())
-				.andReturn();
+		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "1")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
-		List<Firestation> firestations = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {
-		});
+		List<Firestation> firestations = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {});
 
 		assertEquals("There should be 3 stations for station 1", 3, firestations.size());
 	}
 
-	// INVALID http://localhost:8080/flood/stations?stations=<a list of
-	// station_numbers>
+	// INVALID http://localhost:8080/flood/stations?stations=<a list of station_numbers>
 	@Test
 	public void floodStationInvalidStationNumbers() throws Exception {
-		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "invalid stations"))
-				.andExpect(status().isNotFound()).andReturn();
+		MvcResult result = mockMvc.perform(get("/flood/stations").param("stations", "invalid stations")).andExpect(status().isNotFound()).andReturn();
 		String json = result.getResponse().getContentAsString();
-		List<Firestation> firestations = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {
-		});
+		List<Firestation> firestations = objectMapper.readValue(json, new TypeReference<List<Firestation>>() {});
 
 		assertEquals("There should be 0 stations for invalid station number. ", 0, firestations.size());
 	}
@@ -91,11 +84,9 @@ public class FirestationControllerTest {
 	// VALID http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@Test
 	public void phoneNumbersValidStationNumber() throws Exception {
-		MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "4")).andExpect(status().isOk())
-				.andReturn();
+		MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "4")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
-		List<String> phoneNumbers = objectMapper.readValue(json, new TypeReference<List<String>>() {
-		});
+		List<String> phoneNumbers = objectMapper.readValue(json, new TypeReference<List<String>>() {});
 
 		assertEquals("4 phone numbers are expected", 4, phoneNumbers.size());
 	}
@@ -103,11 +94,9 @@ public class FirestationControllerTest {
 	// INVALID http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@Test
 	public void phoneNumbersInvalidStationNumber() throws Exception {
-		MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "invalid station"))
-				.andExpect(status().isNotFound()).andReturn();
+		MvcResult result = mockMvc.perform(get("/phoneAlert").param("firestation", "invalid station")).andExpect(status().isNotFound()).andReturn();
 		String json = result.getResponse().getContentAsString();
-		List<String> phoneNumbers = objectMapper.readValue(json, new TypeReference<List<String>>() {
-		});
+		List<String> phoneNumbers = objectMapper.readValue(json, new TypeReference<List<String>>() {});
 
 		assertEquals("0 phone numbers are expected", 0, phoneNumbers.size());
 	}
@@ -115,8 +104,7 @@ public class FirestationControllerTest {
 	// VALID http://localhost:8080/firestation?stationNumber=<station_number>
 	@Test
 	public void numberOfChildrenAndAdultsValidStationNumber() throws Exception {
-		MvcResult result = mockMvc.perform(get("/firestation").param("stationNumber", "1")).andExpect(status().isOk())
-				.andReturn();
+		MvcResult result = mockMvc.perform(get("/firestation").param("stationNumber", "1")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
 		Station station = objectMapper.readValue(json, Station.class);
 
@@ -127,8 +115,7 @@ public class FirestationControllerTest {
 	// INVALID http://localhost:8080/firestation?stationNumber=<station_number>
 	@Test
 	public void numberOfChildrenAndAdultsInvalidStationNumber() throws Exception {
-		MvcResult result = mockMvc.perform(get("/firestation").param("stationNumber", "invalid number"))
-				.andExpect(status().isNotFound()).andReturn();
+		MvcResult result = mockMvc.perform(get("/firestation").param("stationNumber", "invalid number")).andExpect(status().isNotFound()).andReturn();
 		String json = result.getResponse().getContentAsString();
 		Station station = objectMapper.readValue(json, Station.class);
 
@@ -137,6 +124,8 @@ public class FirestationControllerTest {
 	}
 
 	// ---------- END OF URL tests ----------
+	
+	// ---------- ENDPOINTS tests -----------
 	
 	@Test
 	public void addFirestation() throws Exception {

@@ -23,13 +23,31 @@ public class PersonService {
 	}
 
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
-	public List<Person> getPersonInfoByName(String firstName, String lastName) {
-		return personRepository.getPersonInfoByName(firstName, lastName);
+	public List<Person> getPersonsInfoByFirstNameLastName(String firstName, String lastName) {
+		return personRepository.getPersonsInfoByFirstNameLastName(firstName, lastName);
 	}
 	
 	// http://localhost:8080/childAlert?address=<address>
-	public ChildAlert getChildAlertByAddress(String address) {
-		return personRepository.getChildAlertByAddress(address);
+	public ChildAlert getChildrenInfoAlertByAddress(String address) {
+		return personRepository.getChildrenInfoAlertByAddress(address);
 	}
+	
 	// ---------- END OF URLs ----------
+	
+	
+	// ---------- ENDPOINTS ----------
+	
+	public Person createPerson(Person person) {
+		return personRepository.createPerson(person);
+	}
+	
+	public Person updatePerson(Person person) {
+		return personRepository.updatePerson(person);
+	}
+	
+	public boolean deletePerson(Person person) {
+		return personRepository.deletePerson(person);
+	}
+	
+	// ---------- END OF ENDPOINTS ----------
 }
