@@ -16,6 +16,11 @@ public class Person {
 
 	private MedicalRecord medicalRecord;
 
+
+	public Person() {
+		this("", "", "", "", "", "", "", new MedicalRecord());
+	}
+
 	public Person(String firstName, String lastName, String address, String city, String zip, String phone,String email, MedicalRecord medicalRecord) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);

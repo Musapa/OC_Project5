@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Firestation;
-import com.openclassrooms.project5.dto.FirestationDTO;
 import com.openclassrooms.project5.dto.Station;
 import com.openclassrooms.project5.service.FirestationService;
 
@@ -99,23 +98,22 @@ public class FirestationController {
 	// ---------- ENDPOINTS ----------
 	
 	@RequestMapping(value = "/firestation", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<FirestationDTO> addFirestaion(@RequestBody FirestationDTO firestationDTO) {
-		Firestation firestation = convertToEntity(firestationDTO);
+	public ResponseEntity<Firestation> addFirestaion(@RequestBody Firestation firestation) {
 		Firestation firestationCreated = firestationService.createFirestation(firestation);
-		return ResponseEntity.ok().body(convertToDto(firestationCreated));
+		//TODO if firestation null return 422 add logging
+		return ResponseEntity.ok().body(firestationCreated);
 	}
 
 	@RequestMapping(value = "/firestation", method = RequestMethod.PUT, produces = "application/json")
-	public ResponseEntity<FirestationDTO> updateFirestaion(@RequestBody FirestationDTO firestationDTO) {
-		Firestation firestation = convertToEntity(firestationDTO);
-		//TODO update Firestation
+	public ResponseEntity<Firestation> updateFirestaion(@RequestBody Firestation firestation) {
+		//TODO update Firestation, add loging
 		Firestation firestationUpdated = firestationService.updateFirestation(firestation);
-		return ResponseEntity.ok().body(convertToDto(firestationUpdated));
+		//TODO if firsestation is null return unprocessableEntity
+		return ResponseEntity.unprocessableEntity().body(firestationUpdated);
 	}
 
 	@RequestMapping(value = "/firestation", method = RequestMethod.DELETE, produces = "application/json")
-	public ResponseEntity<FirestationDTO> deleteFirestaion(@RequestBody FirestationDTO firestationDTO) {
-		Firestation firestation = convertToEntity(firestationDTO);
+	public ResponseEntity<Firestation> deleteFirestaion(@RequestBody Firestation firestation) {
 		
 		if (firestationService.deleteFirestation(firestation)) {
 			return ResponseEntity.ok().build();
@@ -124,12 +122,5 @@ public class FirestationController {
 	}
 
 	// ---------- END OF ENDPOINTS ----------
-	
-	private FirestationDTO convertToDto(Firestation firestation) {
-		return new FirestationDTO(firestation.getAddress(), firestation.getStation());
-	}
-	
-	private Firestation convertToEntity(FirestationDTO firestationDTO) {
-		return new Firestation(firestationDTO.getAddress(), firestationDTO.getStation());
-	}
+
 }

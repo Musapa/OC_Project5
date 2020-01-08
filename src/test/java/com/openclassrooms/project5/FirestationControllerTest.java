@@ -22,7 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.project5.domain.Firestation;
-import com.openclassrooms.project5.dto.FirestationDTO;
 import com.openclassrooms.project5.dto.Station;
 
 @RunWith(SpringRunner.class)
@@ -129,14 +128,14 @@ public class FirestationControllerTest {
 	
 	@Test
 	public void addFirestation() throws Exception {
-		FirestationDTO firestation = new FirestationDTO("Some Address", "100");
+		Firestation firestation = new Firestation("Some Address", "100");
 		String jsonContent = objectMapper.writeValueAsString(firestation);
 
 		MvcResult result = mockMvc.perform(post("/firestation").content(jsonContent)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andReturn();
 		
 		String json = result.getResponse().getContentAsString();
-		FirestationDTO firestationResult = objectMapper.readValue(json, FirestationDTO.class);
+		Firestation firestationResult = objectMapper.readValue(json, Firestation.class);
 		
 		assertEquals("Address correctly returned", true, firestation.getAddress().equals(firestationResult.getAddress()));
 		assertEquals("Station number correctly returned", true, firestation.getStation().equals(firestationResult.getStation()));

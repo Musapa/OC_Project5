@@ -1,8 +1,9 @@
 package com.openclassrooms.project5.domain;
 
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,6 +16,21 @@ public class MedicalRecord {
 	private Date birthdate;
 	private List<String> medications;
 	private List<String> allergies;
+
+	
+	
+	public MedicalRecord() {
+		this("", "", new Date(), new ArrayList<String>(), new ArrayList<String>());
+	}
+
+	public MedicalRecord(String firstName, String lastName, Date birthdate, List<String> medications,
+			List<String> allergies) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthdate = birthdate;
+		this.medications = medications;
+		this.allergies = allergies;
+	}
 
 	public void setFirstName(@JsonProperty("firstName") String firstName) {
 		this.firstName = firstName;

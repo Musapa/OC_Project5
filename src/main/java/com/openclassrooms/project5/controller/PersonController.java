@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Person;
 import com.openclassrooms.project5.dto.ChildAlert;
-import com.openclassrooms.project5.dto.PersonDTO;
 import com.openclassrooms.project5.service.PersonService;
 
 @RestController
@@ -79,24 +78,21 @@ public class PersonController {
 	// ---------- ENDPOINTS ----------
 	
 	@RequestMapping(value = "/person", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<PersonDTO> createPerson(@RequestBody PersonDTO personDTO) {
-		Person person = convertToEntity(personDTO);
+	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 		Person personCreated = personService.createPerson(person);
-		return ResponseEntity.ok().body(convertToDto(personCreated));
+		return ResponseEntity.ok().body(personCreated);
 	}
 	
 	@RequestMapping(value = "/person", method = RequestMethod.PUT, produces = "application/json")
-	public ResponseEntity<PersonDTO> updatePerson(@RequestBody PersonDTO personDTO) {
-		Person person = convertToEntity(personDTO);
+	public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
 		//TODO update Person
 		Person personUpdated = personService.updatePerson(person);
-		return ResponseEntity.ok().body(convertToDto(personUpdated));
+		return ResponseEntity.ok().body(personUpdated);
 	}
 	
 	@RequestMapping(value = "/person", method = RequestMethod.DELETE, produces = "application/json")
-	public ResponseEntity<PersonDTO> deletePerson(@RequestBody PersonDTO personDTO) {
-		Person person = convertToEntity(personDTO);
-		
+	public ResponseEntity<Person> deletePerson(@RequestBody Person person) {
+
 		if (personService.deletePerson(person)) {
 			return ResponseEntity.ok().build();
 		}
@@ -104,12 +100,4 @@ public class PersonController {
 	}
 	
 	// ---------- END OF ENDPOINTS ----------
-	
-	private PersonDTO convertToDto(Person person) {
-		return new PersonDTO(person.getFirstName(), person.getLastName(), person.getPhone(), person.getZip(), person.getAddress(), person.getCity(), person.getEmail(), person.getMedicalRecord());
-	}
-	
-	private Person convertToEntity(PersonDTO personDTO) {
-		return new Person(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getPhone(), personDTO.getZip(), personDTO.getAddress(), personDTO.getCity(), personDTO.getEmail(), personDTO.getMedicalRecord());
-	}
 }

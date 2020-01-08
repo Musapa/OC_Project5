@@ -80,6 +80,7 @@ public class FirestationRepository {
 	// ---------- ENDPOINTS ----------
 	
 	public Firestation createFirestation(Firestation firestation) {
+		//TODO check if exits
 		firestations.add(firestation);
 		return firestation;
 	}

@@ -10,7 +10,7 @@ public class MedicalRecordService {
 	
 	// ---------- ENDPOINTS ----------
 	
-		public MedicalRecord createFirestation(MedicalRecord medicalRecord) {
+/*		public MedicalRecord createFirestation(MedicalRecord medicalRecord) {
 			return medicalRecordRepository.createMedicalRecord(medicalRecord);
 		}
 		
@@ -21,6 +21,6 @@ public class MedicalRecordService {
 		public boolean deleteFirestation(MedicalRecord medicalRecord) {
 			return medicalRecordRepository.deleteMedicalRecord(medicalRecord);
 		}
-		
+*/		
 		// ---------- END OF ENDPOINTS ----------
 }
