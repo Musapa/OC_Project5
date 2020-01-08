@@ -84,8 +84,7 @@ public class FirestationController {
 		Station station = firestationService.getListOfPeopleByStationNumber(stationNumber);
 
 		if (station.getPersons().size() > 0) {
-			log.info("Number of adults:" + station.getNumberOfAdults() + " Number of children:"
-					+ station.getNumberOfChildren());
+			log.info("Number of adults:" + station.getNumberOfAdults() + " Number of children:" + station.getNumberOfChildren());
 			return ResponseEntity.ok().body(station);
 		} else {
 			log.error("Cannot find phone numbers with" + stationNumber);
@@ -100,24 +99,33 @@ public class FirestationController {
 	@RequestMapping(value = "/firestation", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Firestation> addFirestaion(@RequestBody Firestation firestation) {
 		Firestation firestationCreated = firestationService.createFirestation(firestation);
-		//TODO if firestation null return 422 add logging
+		if (firestationCreated == null) {
+			log.info("Firestation not created");
+			return ResponseEntity.unprocessableEntity().body(firestationCreated);
+		}
+		log.info("Firestation created");
 		return ResponseEntity.ok().body(firestationCreated);
 	}
 
 	@RequestMapping(value = "/firestation", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Firestation> updateFirestaion(@RequestBody Firestation firestation) {
-		//TODO update Firestation, add loging
 		Firestation firestationUpdated = firestationService.updateFirestation(firestation);
-		//TODO if firsestation is null return unprocessableEntity
-		return ResponseEntity.unprocessableEntity().body(firestationUpdated);
+		if (firestationUpdated == null) {
+			log.info("Firestation not updated");
+			return ResponseEntity.unprocessableEntity().body(firestationUpdated);
+		}
+		log.info("Firestation updated");
+		return ResponseEntity.ok().body(firestationUpdated);
 	}
 
 	@RequestMapping(value = "/firestation", method = RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<Firestation> deleteFirestaion(@RequestBody Firestation firestation) {
-		
-		if (firestationService.deleteFirestation(firestation)) {
+		boolean firestationDeleted = firestationService.deleteFirestation(firestation);
+		if (firestationDeleted) {
+			log.info("Firestation deleted");
 			return ResponseEntity.ok().build();
 		}
+		log.info("Firestation not not deleted");
 		return ResponseEntity.notFound().build();
 	}
 

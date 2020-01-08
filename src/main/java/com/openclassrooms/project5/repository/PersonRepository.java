@@ -81,8 +81,12 @@ public class PersonRepository {
 	// ---------- ENDPOINTS ----------
 	
 	public Person createPerson(Person person) {
+		Person findPerson = getPerson(person.getFirstName(), person.getLastName());
+		if (findPerson != null) {
 		persons.add(person);
 		return person;
+		}
+		return null;
 	}
 	
 	public Person updatePerson(Person person) {
@@ -109,5 +113,5 @@ public class PersonRepository {
 		return false;
 	}
 	
-	
+	// ---------- END OF ENDPOINTS ----------
 }

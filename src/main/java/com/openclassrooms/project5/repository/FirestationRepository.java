@@ -73,19 +73,20 @@ public class FirestationRepository {
 		}
 		return result;
 	}
-	
+
 	// ---------- END OF URLs ----------
 
-	
 	// ---------- ENDPOINTS ----------
-	
+
 	public Firestation createFirestation(Firestation firestation) {
-		//TODO check if exits
-		firestations.add(firestation);
-		return firestation;
+		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
+		if (findFirestation != null) {
+			firestations.add(firestation);
+			return firestation;
+		}
+		return null;
 	}
 
-	// TODO find getFirestationByAddress and change address if its not null
 	public Firestation updateFirestation(Firestation firestation) {
 		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
 		if (findFirestation != null) {

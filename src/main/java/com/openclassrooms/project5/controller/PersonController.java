@@ -80,22 +80,33 @@ public class PersonController {
 	@RequestMapping(value = "/person", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 		Person personCreated = personService.createPerson(person);
+		if (personCreated == null) {
+			log.info("Person not created");
+			return ResponseEntity.unprocessableEntity().body(personCreated);
+		}
+		log.info("Person created");
 		return ResponseEntity.ok().body(personCreated);
 	}
 	
 	@RequestMapping(value = "/person", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
-		//TODO update Person
 		Person personUpdated = personService.updatePerson(person);
+		if (personUpdated == null) {
+			log.info("Person not created");
+			return ResponseEntity.unprocessableEntity().body(personUpdated);
+		}
+		log.info("Person created");
 		return ResponseEntity.ok().body(personUpdated);
 	}
 	
 	@RequestMapping(value = "/person", method = RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<Person> deletePerson(@RequestBody Person person) {
-
-		if (personService.deletePerson(person)) {
+		boolean personDeleted = personService.deletePerson(person);
+		if (personDeleted) {
+			log.info("Person deleted");
 			return ResponseEntity.ok().build();
 		}
+		log.info("Person not deleted");
 		return ResponseEntity.notFound().build();
 	}
 	
