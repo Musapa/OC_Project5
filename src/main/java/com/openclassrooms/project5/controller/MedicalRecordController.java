@@ -19,16 +19,16 @@ public class MedicalRecordController {
 	private MedicalRecordService medicalRecordService;
 
 	// ---------- ENDPOINTS ----------
-
+	
 	@RequestMapping(value = "/medicalRecord", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+	public ResponseEntity<MedicalRecord> addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
 		MedicalRecord medicalRecordCreated = medicalRecordService.createMedicalRecord(medicalRecord);
 		if (medicalRecordCreated == null) {
 			log.info("MedicalRecord not created");
-			return ResponseEntity.unprocessableEntity().body(medicalRecordCreated);
+			return ResponseEntity.unprocessableEntity().build();
 		}
 		log.info("MedicalRecord created");
-		return ResponseEntity.ok().body(medicalRecordCreated);
+		return ResponseEntity.ok().build();
 	}
 
 	@RequestMapping(value = "/medicalRecord", method = RequestMethod.PUT, produces = "application/json")

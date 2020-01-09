@@ -80,7 +80,7 @@ public class FirestationRepository {
 
 	public Firestation createFirestation(Firestation firestation) {
 		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
-		if (findFirestation != null) {
+		if (findFirestation == null) {
 			firestations.add(firestation);
 			return firestation;
 		}

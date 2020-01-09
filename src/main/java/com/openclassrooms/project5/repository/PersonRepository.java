@@ -82,7 +82,7 @@ public class PersonRepository {
 	
 	public Person createPerson(Person person) {
 		Person findPerson = getPerson(person.getFirstName(), person.getLastName());
-		if (findPerson != null) {
+		if (findPerson == null) {
 		persons.add(person);
 		return person;
 		}

@@ -34,9 +34,9 @@ public class MedicalRecordRepository {
 	
 	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
 		MedicalRecord findMedicalRecord = getMedicalRecord(medicalRecord.getFirstName(), medicalRecord.getLastName());
-		if (findMedicalRecord != null) {
-		medicalRecords.add(medicalRecord);
-		return medicalRecord;
+		if (findMedicalRecord == null) {
+			medicalRecords.add(medicalRecord);
+			return medicalRecord;
 		}
 		return null;
 	}

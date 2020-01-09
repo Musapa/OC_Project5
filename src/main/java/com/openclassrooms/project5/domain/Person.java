@@ -18,7 +18,7 @@ public class Person {
 
 
 	public Person() {
-		this("", "", "", "", "", "", "", new MedicalRecord());
+		this("", "", "", "", "", "", "", null);
 	}
 
 	public Person(String firstName, String lastName, String address, String city, String zip, String phone,String email, MedicalRecord medicalRecord) {

@@ -2,6 +2,7 @@ package com.openclassrooms.project5;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -104,4 +106,21 @@ public class PersonControllerTest {
 	}
 	
 	// ---------- END OF URL tests ----------
+	
+	
+	// ---------- ENDPOINTS tests -----------
+	
+	@Test
+	public void addPerson() throws Exception {
+		Person person = new Person("Some Address", "100", "some", "some", "some", "some", "some", null);
+		String jsonContent = objectMapper.writeValueAsString(person);
+
+		MvcResult result = mockMvc.perform(post("/person").content(jsonContent)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andReturn();
+		
+		String json = result.getResponse().getContentAsString();
+		Person personResult = objectMapper.readValue(json, Person.class);
+		
+		assertEquals("Address correctly returned", true, person.getAddress().equals(personResult.getAddress()));
+	}
 }

@@ -101,7 +101,7 @@ public class FirestationController {
 		Firestation firestationCreated = firestationService.createFirestation(firestation);
 		if (firestationCreated == null) {
 			log.info("Firestation not created");
-			return ResponseEntity.unprocessableEntity().body(firestationCreated);
+			return ResponseEntity.unprocessableEntity().build();
 		}
 		log.info("Firestation created");
 		return ResponseEntity.ok().body(firestationCreated);
