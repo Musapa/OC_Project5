@@ -99,8 +99,7 @@ public class FirestationRepository {
 
 	public boolean deleteFirestation(Firestation firestation) {
 		for (Firestation findFirestation : firestations) {
-			if (findFirestation.getStation().equals(firestation.getStation())
-					&& findFirestation.getAddress().equals(firestation.getAddress())) {
+			if (findFirestation.getStation().equals(firestation.getStation()) && findFirestation.getAddress().equals(firestation.getAddress())) {
 				firestations.remove(findFirestation);
 				return true;
 			}

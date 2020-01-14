@@ -1,8 +1,10 @@
 package com.openclassrooms.project5;
 
 import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -26,7 +28,6 @@ import com.openclassrooms.project5.dto.Station;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
 public class FirestationControllerTest {
 
 	private MockMvc mockMvc;
@@ -140,5 +141,38 @@ public class FirestationControllerTest {
 		assertEquals("Address correctly returned", true, firestation.getAddress().equals(firestationResult.getAddress()));
 		assertEquals("Station number correctly returned", true, firestation.getStation().equals(firestationResult.getStation()));
 	}
+	
+	@Test
+	public void updateFirestation() throws Exception {
+		Firestation firestation = new Firestation("Some Address", "100");
+		Firestation updateFirestation = new Firestation("New Address", "102");
+		String jsonContent = objectMapper.writeValueAsString(firestation);
+		String jsonContent2 = objectMapper.writeValueAsString(updateFirestation);
 
+		MvcResult result = mockMvc.perform(put("/firestation").content(jsonContent).content(jsonContent2)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andReturn();
+		
+		String json = result.getResponse().getContentAsString();
+		Firestation firestationResult = objectMapper.readValue(json, Firestation.class);
+		
+		Firestation updatedFirestationResult = objectMapper.updateValue(firestationResult, updateFirestation);
+		
+		assertEquals("Address correctly updated", true, firestationResult.getAddress().equals(updatedFirestationResult.getAddress()));
+		assertEquals("Station number correctly updated", true, firestationResult.getStation().equals(updatedFirestationResult.getStation()));
+	}
+
+	@Test
+	public void deleteFirestation() throws Exception {
+		Firestation firestation = new Firestation("Some Address", "100");
+		String jsonContent = objectMapper.writeValueAsString(firestation);
+
+		MvcResult result = mockMvc.perform(delete("/firestation").content(jsonContent)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andReturn();
+		
+		String json = result.getResponse().getContentAsString();
+		Firestation firestationResult = objectMapper.readValue(json, Firestation.class);
+		
+		assertEquals("Address correctly deleted", true, firestation.getAddress().equals(firestationResult.getAddress()));
+		assertEquals("Station number correctly deleted", true, firestation.getStation().equals(firestationResult.getStation()));
+	}
 }

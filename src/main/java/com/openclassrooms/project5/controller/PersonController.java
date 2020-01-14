@@ -82,7 +82,7 @@ public class PersonController {
 		Person personCreated = personService.createPerson(person);
 		if (personCreated == null) {
 			log.info("Person not created");
-			return ResponseEntity.unprocessableEntity().body(personCreated);
+			return ResponseEntity.unprocessableEntity().build();
 		}
 		log.info("Person created");
 		return ResponseEntity.ok().body(personCreated);

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,6 @@ import com.openclassrooms.project5.domain.MedicalRecord;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
 public class MedicalRecordControllerTest {
 
 	private MockMvc mockMvc;
@@ -43,7 +43,7 @@ public class MedicalRecordControllerTest {
 	
 	@Test
 	public void addMedicalRecord() throws Exception {
-		MedicalRecord medicalRecord = new MedicalRecord("Some firstName", "Some lastName", null, Arrays.asList("xyz", "abc"), Arrays.asList("xyz", "abc"));
+		MedicalRecord medicalRecord = new MedicalRecord("Some firstName", "Some lastName", new Date(), Arrays.asList("xyz", "abc"), Arrays.asList("xyz", "abc"));
 		String jsonContent = objectMapper.writeValueAsString(medicalRecord);
 
 		MvcResult result = mockMvc.perform(post("/medicalRecord").content(jsonContent)

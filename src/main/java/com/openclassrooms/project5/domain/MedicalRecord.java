@@ -23,8 +23,7 @@ public class MedicalRecord {
 		this("", "", new Date(), new ArrayList<String>(), new ArrayList<String>());
 	}
 
-	public MedicalRecord(String firstName, String lastName, Date birthdate, List<String> medications,
-			List<String> allergies) {
+	public MedicalRecord(String firstName, String lastName, Date birthdate, List<String> medications, List<String> allergies) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = birthdate;

@@ -112,7 +112,7 @@ public class FirestationController {
 		Firestation firestationUpdated = firestationService.updateFirestation(firestation);
 		if (firestationUpdated == null) {
 			log.info("Firestation not updated");
-			return ResponseEntity.unprocessableEntity().body(firestationUpdated);
+			return ResponseEntity.unprocessableEntity().build();
 		}
 		log.info("Firestation updated");
 		return ResponseEntity.ok().body(firestationUpdated);
@@ -125,7 +125,7 @@ public class FirestationController {
 			log.info("Firestation deleted");
 			return ResponseEntity.ok().build();
 		}
-		log.info("Firestation not not deleted");
+		log.info("Firestation not deleted");
 		return ResponseEntity.notFound().build();
 	}
 

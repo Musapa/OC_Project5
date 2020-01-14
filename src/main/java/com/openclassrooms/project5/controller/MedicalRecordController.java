@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.MedicalRecord;
 import com.openclassrooms.project5.service.MedicalRecordService;
 
+@RestController 
 public class MedicalRecordController {
 
 	private static final Logger log = LoggerFactory.getLogger(MedicalRecordController.class);
@@ -23,12 +25,12 @@ public class MedicalRecordController {
 	@RequestMapping(value = "/medicalRecord", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<MedicalRecord> addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
 		MedicalRecord medicalRecordCreated = medicalRecordService.createMedicalRecord(medicalRecord);
-		if (medicalRecordCreated == null) {
+		if (medicalRecordCreated != null) {
 			log.info("MedicalRecord not created");
 			return ResponseEntity.unprocessableEntity().build();
 		}
 		log.info("MedicalRecord created");
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body(medicalRecordCreated);
 	}
 
 	@RequestMapping(value = "/medicalRecord", method = RequestMethod.PUT, produces = "application/json")

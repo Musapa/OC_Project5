@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.project5.domain.MedicalRecord;
 import com.openclassrooms.project5.domain.Person;
 import com.openclassrooms.project5.dto.ChildAlert;
 
@@ -112,7 +113,7 @@ public class PersonControllerTest {
 	
 	@Test
 	public void addPerson() throws Exception {
-		Person person = new Person("Some Address", "100", "some", "some", "some", "some", "some", null);
+		Person person = new Person("Some Address", "100", "some", "some", "some", "some", "some", new MedicalRecord());
 		String jsonContent = objectMapper.writeValueAsString(person);
 
 		MvcResult result = mockMvc.perform(post("/person").content(jsonContent)
