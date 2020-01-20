@@ -21,8 +21,6 @@ public class FirestationRepository {
 		firestations.add(firestation);
 	}
 
-	// ---------- URLs ----------
-
 	// http://localhost:8080/fire?address=<address>
 	public Firestation getFirestationByAddress(String address) {
 		for (Firestation firestation : firestations) {
@@ -74,10 +72,6 @@ public class FirestationRepository {
 		return result;
 	}
 
-	// ---------- END OF URLs ----------
-
-	// ---------- ENDPOINTS ----------
-
 	public Firestation createFirestation(Firestation firestation) {
 		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
 		if (findFirestation == null) {
@@ -88,7 +82,7 @@ public class FirestationRepository {
 	}
 
 	public Firestation updateFirestation(Firestation firestation) {
-		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
+		Firestation findFirestation = getFirestationByStation(firestation.getStation());
 		if (findFirestation != null) {
 			findFirestation.setAddress(firestation.getAddress());
 			findFirestation.setStation(firestation.getStation());
@@ -99,7 +93,8 @@ public class FirestationRepository {
 
 	public boolean deleteFirestation(Firestation firestation) {
 		for (Firestation findFirestation : firestations) {
-			if (findFirestation.getStation().equals(firestation.getStation()) && findFirestation.getAddress().equals(firestation.getAddress())) {
+			if (findFirestation.getStation().equals(firestation.getStation())
+					&& findFirestation.getAddress().equals(firestation.getAddress())) {
 				firestations.remove(findFirestation);
 				return true;
 			}
@@ -107,4 +102,12 @@ public class FirestationRepository {
 		return false;
 	}
 
+	private Firestation getFirestationByStation(String station) {
+		for (Firestation firestation : firestations) {
+			if (firestation.getStation().equals(station)) {
+				return firestation;
+			}
+		}
+		return null;
+	}
 }

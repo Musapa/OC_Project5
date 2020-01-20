@@ -12,8 +12,6 @@ public class MedicalRecordService {
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
 
-	// ---------- ENDPOINTS ----------
-
 	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
 		return medicalRecordRepository.createMedicalRecord(medicalRecord);
 	}
@@ -26,5 +24,4 @@ public class MedicalRecordService {
 		return medicalRecordRepository.deleteMedicalRecord(medicalRecord);
 	}
 
-	// ---------- END OF ENDPOINTS ----------
 }

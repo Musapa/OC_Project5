@@ -27,8 +27,6 @@ public class FirestationController {
 	@Autowired
 	private FirestationService firestationService;
 
-	// ---------- URLs ----------
-
 	// http://localhost:8080/fire?address=<address>
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Firestation> getFirestationByAddress(@RequestParam(value = "address") String address) {
@@ -47,7 +45,8 @@ public class FirestationController {
 
 	// http://localhost:8080/flood/stations?stations=<a list of station_numbers>
 	@RequestMapping(value = "/flood/stations", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<Firestation>> getFirestationHouseholdsByStationNumbers(@RequestParam(value = "stations") String station) {
+	public ResponseEntity<List<Firestation>> getFirestationHouseholdsByStationNumbers(
+			@RequestParam(value = "stations") String station) {
 		log.info("Get Firestation with station number " + station);
 		String[] stations = station.split(",");
 		List<Firestation> firestation = firestationService.getFirestationHouseholdsByStationNumbers(stations);
@@ -63,10 +62,11 @@ public class FirestationController {
 
 	// http://localhost:8080/phoneAlert?firestation=<firestation_number>
 	@RequestMapping(value = "/phoneAlert", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<String>> getPhoneNumbersByStationNumber(@RequestParam(value = "firestation") String station) {
+	public ResponseEntity<List<String>> getPhoneNumbersByStationNumber(
+			@RequestParam(value = "firestation") String station) {
 		log.info("Get phone numbers by station number " + station);
 		List<String> result = new ArrayList<>(
-		new HashSet<>(firestationService.getPhoneNumbersByStationNumber(station)));
+				new HashSet<>(firestationService.getPhoneNumbersByStationNumber(station)));
 
 		if (result.size() > 0) {
 			log.info("There are " + result.size() + " phone numbers in station number " + station);
@@ -79,23 +79,21 @@ public class FirestationController {
 
 	// http://localhost:8080/firestation?stationNumber=<station_number>
 	@RequestMapping(value = "/firestation", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<Station> getListOfPeopleByStationNumber(@RequestParam(value = "stationNumber") String stationNumber) {
+	public ResponseEntity<Station> getListOfPeopleByStationNumber(
+			@RequestParam(value = "stationNumber") String stationNumber) {
 		log.info("Get a list of people (adults and children) serviced by station number: " + stationNumber);
 		Station station = firestationService.getListOfPeopleByStationNumber(stationNumber);
 
 		if (station.getPersons().size() > 0) {
-			log.info("Number of adults:" + station.getNumberOfAdults() + " Number of children:" + station.getNumberOfChildren());
+			log.info("Number of adults:" + station.getNumberOfAdults() + " Number of children:"
+					+ station.getNumberOfChildren());
 			return ResponseEntity.ok().body(station);
 		} else {
 			log.error("Cannot find phone numbers with" + stationNumber);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(station);
 		}
 	}
-	// ---------- END OF URLs ----------
 
-	
-	// ---------- ENDPOINTS ----------
-	
 	@RequestMapping(value = "/firestation", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Firestation> addFirestaion(@RequestBody Firestation firestation) {
 		Firestation firestationCreated = firestationService.createFirestation(firestation);
@@ -128,7 +126,5 @@ public class FirestationController {
 		log.info("Firestation not deleted");
 		return ResponseEntity.notFound().build();
 	}
-
-	// ---------- END OF ENDPOINTS ----------
 
 }

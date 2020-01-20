@@ -15,8 +15,6 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 
-	// ---------- URLs ----------
-	
 	// http://localhost:8080/communityEmail?city=<city>
 	public List<String> getEmailsByCity(String city) {
 		return personRepository.getEmailsByCity(city);
@@ -26,28 +24,22 @@ public class PersonService {
 	public List<Person> getPersonsInfoByFirstNameLastName(String firstName, String lastName) {
 		return personRepository.getPersonsInfoByFirstNameLastName(firstName, lastName);
 	}
-	
+
 	// http://localhost:8080/childAlert?address=<address>
 	public ChildAlert getChildrenInfoAlertByAddress(String address) {
 		return personRepository.getChildrenInfoAlertByAddress(address);
 	}
-	
-	// ---------- END OF URLs ----------
-	
-	
-	// ---------- ENDPOINTS ----------
-	
+
 	public Person createPerson(Person person) {
 		return personRepository.createPerson(person);
 	}
-	
+
 	public Person updatePerson(Person person) {
 		return personRepository.updatePerson(person);
 	}
-	
+
 	public boolean deletePerson(Person person) {
 		return personRepository.deletePerson(person);
 	}
-	
-	// ---------- END OF ENDPOINTS ----------
+
 }

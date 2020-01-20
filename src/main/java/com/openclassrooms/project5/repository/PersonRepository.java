@@ -21,17 +21,6 @@ public class PersonRepository {
 		persons.add(person);
 	}
 
-	public Person getPerson(String firstName, String lastName) {
-		for (Person person : persons) {
-			if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
-				return person;
-			}
-		}
-		return null;
-	}
-	
-	// ---------- URLs ----------
-	
 	// http://localhost:8080/communityEmail?city=<city>
 	public List<String> getEmailsByCity(String city) {
 
@@ -74,24 +63,21 @@ public class PersonRepository {
 		}
 		return result;
 	}
-	
-	// ---------- END OF URLs ----------
-	
-	
-	// ---------- ENDPOINTS ----------
-	
+
 	public Person createPerson(Person person) {
-		Person findPerson = getPerson(person.getFirstName(), person.getLastName());
+		Person findPerson = getPersonFirstLastName(person.getFirstName(), person.getLastName());
 		if (findPerson == null) {
-		persons.add(person);
-		return person;
+			persons.add(person);
+			return person;
 		}
 		return null;
 	}
-	
+
 	public Person updatePerson(Person person) {
-		Person findPerson = getPerson(person.getFirstName(), person.getLastName());
+		Person findPerson = getPersonFirstLastName(person.getFirstName(), person.getLastName());
 		if (findPerson != null) {
+			findPerson.setFirstName(person.getFirstName());
+			findPerson.setLastName(person.getLastName());
 			findPerson.setAddress(person.getAddress());
 			findPerson.setCity(person.getCity());
 			findPerson.setEmail(person.getEmail());
@@ -102,16 +88,25 @@ public class PersonRepository {
 		}
 		return null;
 	}
-	
+
 	public boolean deletePerson(Person person) {
 		for (Person findPerson : persons) {
-			if (findPerson.getFirstName().equals(person.getFirstName()) && findPerson.getLastName().equals(person.getLastName())) {
+			if (findPerson.getFirstName().equals(person.getFirstName())
+					&& findPerson.getLastName().equals(person.getLastName())) {
 				persons.remove(findPerson);
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	// ---------- END OF ENDPOINTS ----------
+
+	private Person getPersonFirstLastName(String firstName, String lastName) {
+		for (Person person : persons) {
+			if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				return person;
+			}
+		}
+		return null;
+	}
+
 }

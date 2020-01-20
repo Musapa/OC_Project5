@@ -25,14 +25,12 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
-	// ---------- URLs ----------
-	
 	// http://localhost:8080/communityEmail?city=<city>
 	@RequestMapping(value = "/communityEmail", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<String>> getEmailsByCity(@RequestParam(value = "city") String city) {
 		log.info("Get email address on city: " + city);
 		List<String> email = personService.getEmailsByCity(city);
-		
+
 		if (email.size() > 0) {
 			log.info("Found " + email.size() + " email addresses on " + city);
 			return ResponseEntity.ok().body(email);
@@ -44,10 +42,11 @@ public class PersonController {
 
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
 	@RequestMapping(value = "/personInfo", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<Person>> getPersonsInfoByFirstNameLastName(@RequestParam(value = "firstName") String firstName, String lastName) {
+	public ResponseEntity<List<Person>> getPersonsInfoByFirstNameLastName(
+			@RequestParam(value = "firstName") String firstName, String lastName) {
 		log.info("Get first name of person: " + firstName + " and get last name of person: " + lastName);
 		List<Person> personInfo = personService.getPersonsInfoByFirstNameLastName(firstName, lastName);
-				
+
 		if (personInfo.size() > 0) {
 			log.info("There is a " + personInfo.size() + " person");
 			return ResponseEntity.ok().body(personInfo);
@@ -62,21 +61,17 @@ public class PersonController {
 	public ResponseEntity<ChildAlert> getChildrenInfoAlertByAddress(@RequestParam(value = "address") String address) {
 		log.info("Get number of children and adults on: " + address);
 		ChildAlert childInfo = personService.getChildrenInfoAlertByAddress(address);
-				
+
 		if (childInfo.getChildren().size() > 0 && childInfo.getAdults().size() > 0) {
-			log.info("There are " + childInfo.getChildren().size() + " childrens and " + childInfo.getAdults().size() + " adults on " + address);
+			log.info("There are " + childInfo.getChildren().size() + " childrens and " + childInfo.getAdults().size()
+					+ " adults on " + address);
 			return ResponseEntity.ok().body(childInfo);
 		} else {
 			log.error("Cannot find person with address: " + address);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(childInfo);
 		}
 	}
-	
-	// ---------- END OF URLs ----------
-	
-	
-	// ---------- ENDPOINTS ----------
-	
+
 	@RequestMapping(value = "/person", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 		Person personCreated = personService.createPerson(person);
@@ -87,7 +82,7 @@ public class PersonController {
 		log.info("Person created");
 		return ResponseEntity.ok().body(personCreated);
 	}
-	
+
 	@RequestMapping(value = "/person", method = RequestMethod.PUT, produces = "application/json")
 	public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
 		Person personUpdated = personService.updatePerson(person);
@@ -98,7 +93,7 @@ public class PersonController {
 		log.info("Person created");
 		return ResponseEntity.ok().body(personUpdated);
 	}
-	
+
 	@RequestMapping(value = "/person", method = RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<Person> deletePerson(@RequestBody Person person) {
 		boolean personDeleted = personService.deletePerson(person);
@@ -109,6 +104,5 @@ public class PersonController {
 		log.info("Person not deleted");
 		return ResponseEntity.notFound().build();
 	}
-	
-	// ---------- END OF ENDPOINTS ----------
+
 }
