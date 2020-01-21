@@ -57,6 +57,12 @@ public class MedicalRecordControllerTest {
 				medicalRecord.getFirstName().equals(medicalRecordResult.getFirstName()));
 		assertEquals("Last name correctly returned", true,
 				medicalRecord.getLastName().equals(medicalRecordResult.getLastName()));
+		assertEquals("Date correctly returned", true,
+				medicalRecord.getBirthdate().equals(medicalRecordResult.getBirthdate()));
+		assertEquals("Medications correctly returned", true,
+				medicalRecord.getMedications().equals(medicalRecordResult.getMedications()));
+		assertEquals("Allergies correctly returned", true,
+				medicalRecord.getAllergies().equals(medicalRecordResult.getAllergies()));
 	}
 
 	@Test

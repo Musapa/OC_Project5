@@ -55,7 +55,7 @@ public class MedicalRecordRepository {
 
 	private MedicalRecord getMedicalRecordByFirstLastName(String firstName, String lastName) {
 		for (MedicalRecord medicalRecord : medicalRecords) {
-			if (medicalRecord.getFirstName().equals(firstName) & medicalRecord.getLastName().equals(lastName)) {
+			if (medicalRecord.getFirstName().equals(firstName) && medicalRecord.getLastName().equals(lastName)) {
 				return medicalRecord;
 			}
 		}

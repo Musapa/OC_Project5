@@ -7,6 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -121,7 +123,8 @@ public class PersonControllerTest {
 
 	@Test
 	public void addPerson() throws Exception {
-		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1", new MedicalRecord());
+		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1", new MedicalRecord("firstName1", "lastName1", new Date(),
+				Arrays.asList("medication1", "medication2"), Arrays.asList("allergies1", "allergies2")));
 		String jsonContent = objectMapper.writeValueAsString(person);
 
 		MvcResult result = mockMvc.perform(post("/person").content(jsonContent).contentType(MediaType.APPLICATION_JSON)

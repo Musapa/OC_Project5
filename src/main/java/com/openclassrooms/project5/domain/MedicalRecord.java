@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jsoniter.annotation.JsonIgnore;
 import com.jsoniter.annotation.JsonProperty;
 
 public class MedicalRecord {
@@ -47,11 +48,16 @@ public class MedicalRecord {
 		return this.lastName;
 	}
 
+    @JsonIgnore 
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;  
+	}
+	
 	public void setBirthdate(@JsonProperty("birthdate") String birthdate) throws ParseException {
-		this.birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate);  
+		this.birthdate = new SimpleDateFormat("MM/dd/yyyy").parse(birthdate);  
 	}
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
 	public Date getBirthdate() {
 		return this.birthdate;
 	}
