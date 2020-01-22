@@ -123,8 +123,9 @@ public class PersonControllerTest {
 
 	@Test
 	public void addPerson() throws Exception {
-		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1", new MedicalRecord("firstName1", "lastName1", new Date(),
-				Arrays.asList("medication1", "medication2"), Arrays.asList("allergies1", "allergies2")));
+		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
+				Arrays.asList("medication0", "medication1"), Arrays.asList("allergies0", "allergies1"));
+		Person person = new Person("firstName", "lastName", "address", "city", "zip", "phone", "email", medicalRecord);
 		String jsonContent = objectMapper.writeValueAsString(person);
 
 		MvcResult result = mockMvc.perform(post("/person").content(jsonContent).contentType(MediaType.APPLICATION_JSON)
@@ -132,34 +133,74 @@ public class PersonControllerTest {
 
 		String json = result.getResponse().getContentAsString();
 		Person personResult = objectMapper.readValue(json, Person.class);
+		MedicalRecord medicalRecordResult = personResult.getMedicalRecord();
 
+		assertEquals("FirstName correctly returned", true, person.getFirstName().equals(personResult.getFirstName()));
+		assertEquals("LastName correctly returned", true, person.getLastName().equals(personResult.getLastName()));
 		assertEquals("Address correctly returned", true, person.getAddress().equals(personResult.getAddress()));
+		assertEquals("City correctly returned", true, person.getCity().equals(personResult.getCity()));
+		assertEquals("Zip correctly returned", true, person.getZip().equals(personResult.getZip()));
+		assertEquals("Phone correctly returned", true, person.getPhone().equals(personResult.getPhone()));
+		assertEquals("Email correctly returned", true, person.getEmail().equals(personResult.getEmail()));
+
+		assertEquals("First name correctly returned", true,
+				medicalRecord.getFirstName().equals(medicalRecordResult.getFirstName()));
+		assertEquals("Last name correctly returned", true,
+				medicalRecord.getLastName().equals(medicalRecordResult.getLastName()));
+		assertEquals("Date correctly returned", false,
+				medicalRecord.getBirthdate().equals(medicalRecordResult.getBirthdate()));
+		assertEquals("Medications correctly returned", true,
+				medicalRecord.getMedications().equals(medicalRecordResult.getMedications()));
+		assertEquals("Allergies correctly returned", true,
+				medicalRecord.getAllergies().equals(medicalRecordResult.getAllergies()));
 	}
-	
+
 	@Test
 	public void updatePerson() throws Exception {
-		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1", new MedicalRecord());
-		Person updatePerson = new Person("firstName2", "lastName2", "address2", "city2", "zip2", "phone2", "email2", new MedicalRecord());
+		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1",
+				new MedicalRecord());
+		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
+				Arrays.asList("medication0", "medication1"), Arrays.asList("allergies0", "allergies1"));
+
+		Person updatePerson = new Person("firstName1", "lastName1", "New address1", "New city1", "New zip1",
+				"New phone", "Newe mail1", medicalRecord);
 		String jsonContent = objectMapper.writeValueAsString(person);
 		String jsonContent2 = objectMapper.writeValueAsString(updatePerson);
 
 		mockMvc.perform(post("/person").content(jsonContent).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
-		MvcResult result = mockMvc.perform(put("/person").content(jsonContent2)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andReturn();
+		MvcResult result = mockMvc.perform(put("/person").content(jsonContent2).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
 
 		String json = result.getResponse().getContentAsString();
 		Person personResult = objectMapper.readValue(json, Person.class);
+		MedicalRecord medicalRecordResult = personResult.getMedicalRecord();
 
-		assertEquals("Address correctly updated", true,
-				personResult.getAddress().equals(updatePerson.getAddress()));
+		assertEquals("FirstName correctly updated", true, personResult.getFirstName().equals(updatePerson.getFirstName()));
+		assertEquals("LastName correctly updated", true, personResult.getLastName().equals(updatePerson.getLastName()));
+		assertEquals("Address correctly updated", true, personResult.getAddress().equals(updatePerson.getAddress()));
+		assertEquals("City correctly updated", true, personResult.getCity().equals(updatePerson.getCity()));
+		assertEquals("Zip correctly updated", true, personResult.getZip().equals(updatePerson.getZip()));
+		assertEquals("Phone correctly updated", true, personResult.getPhone().equals(updatePerson.getPhone()));
+		assertEquals("Email correctly updated", true, personResult.getEmail().equals(updatePerson.getEmail()));
+
+		assertEquals("First name correctly returned", true,
+				medicalRecord.getFirstName().equals(medicalRecordResult.getFirstName()));
+		assertEquals("Last name correctly returned", true,
+				medicalRecord.getLastName().equals(medicalRecordResult.getLastName()));
+		assertEquals("Date correctly returned", false,
+				medicalRecord.getBirthdate().equals(medicalRecordResult.getBirthdate()));
+		assertEquals("Medications correctly returned", true,
+				medicalRecord.getMedications().equals(medicalRecordResult.getMedications()));
+		assertEquals("Allergies correctly returned", true,
+				medicalRecord.getAllergies().equals(medicalRecordResult.getAllergies()));
 	}
-	
+
 	@Test
 	public void deletePerson() throws Exception {
-		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1", new MedicalRecord());
+		Person person = new Person("firstName3", "lastName3", "address3", "city3", "zip3", "phone3", "email3",
+				new MedicalRecord());
 		String jsonContent = objectMapper.writeValueAsString(person);
 
 		mockMvc.perform(post("/person").content(jsonContent).contentType(MediaType.APPLICATION_JSON)

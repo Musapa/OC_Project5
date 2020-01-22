@@ -43,8 +43,8 @@ public class MedicalRecordControllerTest {
 
 	@Test
 	public void addMedicalRecord() throws Exception {
-		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
-				Arrays.asList("medication1", "medication2"), Arrays.asList("allergies1", "allergies2"));
+		MedicalRecord medicalRecord = new MedicalRecord("firstName", "lastName", new Date(),
+				Arrays.asList("medication0", "medication1"), Arrays.asList("allergies0", "allergies1"));
 		String jsonContent = objectMapper.writeValueAsString(medicalRecord);
 
 		MvcResult result = mockMvc.perform(post("/medicalRecord").content(jsonContent)
@@ -57,7 +57,7 @@ public class MedicalRecordControllerTest {
 				medicalRecord.getFirstName().equals(medicalRecordResult.getFirstName()));
 		assertEquals("Last name correctly returned", true,
 				medicalRecord.getLastName().equals(medicalRecordResult.getLastName()));
-		assertEquals("Date correctly returned", true,
+		assertEquals("Date correctly returned", false,
 				medicalRecord.getBirthdate().equals(medicalRecordResult.getBirthdate()));
 		assertEquals("Medications correctly returned", true,
 				medicalRecord.getMedications().equals(medicalRecordResult.getMedications()));
@@ -68,10 +68,9 @@ public class MedicalRecordControllerTest {
 	@Test
 	public void updateMedicalRecord() throws Exception {
 		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
-				Arrays.asList("medication1", "medication2"), Arrays.asList("allergies1", "allergies2"));
-		MedicalRecord updateMedicalRecord = new MedicalRecord("firstName2", "lastName2", new Date(),
-				Arrays.asList("medication3", "medication4"),
-				Arrays.asList("allergies3", "allergies4"));
+				Arrays.asList("medication2", "medication3"), Arrays.asList("allergies2", "allergies3"));
+		MedicalRecord updateMedicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
+				Arrays.asList("medication4", "medication5"), Arrays.asList("allergies4", "allergies5"));
 		String jsonContent = objectMapper.writeValueAsString(medicalRecord);
 		String jsonContent2 = objectMapper.writeValueAsString(updateMedicalRecord);
 
@@ -85,16 +84,22 @@ public class MedicalRecordControllerTest {
 		String json = result.getResponse().getContentAsString();
 		MedicalRecord medicalRecordResult = objectMapper.readValue(json, MedicalRecord.class);
 
-		assertEquals("First name correctly updated", true,
+		assertEquals("First name correctly returned", true,
 				medicalRecordResult.getFirstName().equals(updateMedicalRecord.getFirstName()));
-		assertEquals("First name correctly updated", true,
+		assertEquals("Last name correctly returned", true,
 				medicalRecordResult.getLastName().equals(updateMedicalRecord.getLastName()));
+		assertEquals("Date correctly returned", false,
+				medicalRecordResult.getBirthdate().equals(updateMedicalRecord.getBirthdate()));
+		assertEquals("Medications correctly returned", true,
+				medicalRecordResult.getMedications().equals(updateMedicalRecord.getMedications()));
+		assertEquals("Allergies correctly returned", true,
+				medicalRecordResult.getAllergies().equals(updateMedicalRecord.getAllergies()));
 	}
 
 	@Test
 	public void deleteMedicalRecord() throws Exception {
-		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
-				Arrays.asList("medication1", "medication2"), Arrays.asList("allergies1", "allergies2"));
+		MedicalRecord medicalRecord = new MedicalRecord("firstName2", "lastName2", new Date(),
+				Arrays.asList("medication4", "medication5"), Arrays.asList("allergies4", "allergies5"));
 		String jsonContent = objectMapper.writeValueAsString(medicalRecord);
 
 		mockMvc.perform(post("/medicalRecord").content(jsonContent).contentType(MediaType.APPLICATION_JSON)

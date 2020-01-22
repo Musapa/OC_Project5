@@ -18,8 +18,6 @@ public class MedicalRecord {
 	private List<String> medications;
 	private List<String> allergies;
 
-	
-	
 	public MedicalRecord() {
 		this("", "", new Date(), new ArrayList<String>(), new ArrayList<String>());
 	}
@@ -48,13 +46,13 @@ public class MedicalRecord {
 		return this.lastName;
 	}
 
-    @JsonIgnore 
+	@JsonIgnore
 	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;  
+		this.birthdate = birthdate;
 	}
-	
+
 	public void setBirthdate(@JsonProperty("birthdate") String birthdate) throws ParseException {
-		this.birthdate = new SimpleDateFormat("MM/dd/yyyy").parse(birthdate);  
+		this.birthdate = new SimpleDateFormat("MM/dd/yyyy").parse(birthdate);
 	}
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
