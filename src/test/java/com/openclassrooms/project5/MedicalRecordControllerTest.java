@@ -63,6 +63,9 @@ public class MedicalRecordControllerTest {
 				medicalRecord.getMedications().equals(medicalRecordResult.getMedications()));
 		assertEquals("Allergies correctly returned", true,
 				medicalRecord.getAllergies().equals(medicalRecordResult.getAllergies()));
+		
+		mockMvc.perform(post("/medicalRecord").content(jsonContent)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnprocessableEntity());
 	}
 
 	@Test
@@ -94,6 +97,12 @@ public class MedicalRecordControllerTest {
 				medicalRecordResult.getMedications().equals(updateMedicalRecord.getMedications()));
 		assertEquals("Allergies correctly returned", true,
 				medicalRecordResult.getAllergies().equals(updateMedicalRecord.getAllergies()));
+		
+		MedicalRecord medicalRecordUnknown = new MedicalRecord("Unknown firstName", "Unknown lastName", new Date(),
+				Arrays.asList("medication2", "medication3"), Arrays.asList("allergies2", "allergies3"));
+		String jsonContent3 = objectMapper.writeValueAsString(medicalRecordUnknown);
+		mockMvc.perform(put("/medicalRecord").content(jsonContent3)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnprocessableEntity());
 	}
 
 	@Test

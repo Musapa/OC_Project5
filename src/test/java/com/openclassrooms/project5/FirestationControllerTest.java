@@ -149,6 +149,9 @@ public class FirestationControllerTest {
 				firestation.getAddress().equals(firestationResult.getAddress()));
 		assertEquals("Station number correctly returned", true,
 				firestation.getStation().equals(firestationResult.getStation()));
+		
+		mockMvc.perform(post("/firestation").content(jsonContent)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnprocessableEntity());
 	}
 
 	@Test
@@ -172,6 +175,11 @@ public class FirestationControllerTest {
 				firestationResult.getAddress().equals(updateFirestation.getAddress()));
 		assertEquals("Station number correctly updated", true,
 				firestationResult.getStation().equals(updateFirestation.getStation()));
+		
+		Firestation firestationUnknown = new Firestation("Unknown Address", "-1");
+		String jsonContent3 = objectMapper.writeValueAsString(firestationUnknown);
+		mockMvc.perform(put("/firestation").content(jsonContent3)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnprocessableEntity());
 	}
 
 	@Test
