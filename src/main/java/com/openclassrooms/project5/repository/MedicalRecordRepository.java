@@ -8,18 +8,22 @@ import org.springframework.stereotype.Repository;
 import com.openclassrooms.project5.domain.MedicalRecord;
 
 @Repository
-public class MedicalRecordRepository {
+public class MedicalRecordRepository implements IMedicalRecordRepository {
 
 	private List<MedicalRecord> medicalRecords = new ArrayList<>();
 
-	public List<MedicalRecord> getMedicalRecord() {
-		return medicalRecords;
-	}
-
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#add(com.openclassrooms.project5.domain.MedicalRecord)
+	 */
+	@Override
 	public void add(MedicalRecord medicalRecord) {
 		medicalRecords.add(medicalRecord);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#createMedicalRecord(com.openclassrooms.project5.domain.MedicalRecord)
+	 */
+	@Override
 	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
 		MedicalRecord findMedicalRecord = getMedicalRecordByFirstLastName(medicalRecord.getFirstName(), medicalRecord.getLastName());
 		if (findMedicalRecord == null) {
@@ -29,6 +33,10 @@ public class MedicalRecordRepository {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#updateMedicalRecord(com.openclassrooms.project5.domain.MedicalRecord)
+	 */
+	@Override
 	public MedicalRecord updateMedicalRecord(MedicalRecord medicalRecord) {
 		MedicalRecord findMedicalRecord = getMedicalRecordByFirstLastName(medicalRecord.getFirstName(), medicalRecord.getLastName());
 		if (findMedicalRecord != null) {
@@ -42,6 +50,10 @@ public class MedicalRecordRepository {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#deleteMedicalRecord(com.openclassrooms.project5.domain.MedicalRecord)
+	 */
+	@Override
 	public boolean deleteMedicalRecord(MedicalRecord medicalRecord) {
 		for (MedicalRecord findMedicalRecord : medicalRecords) {
 			if (findMedicalRecord.getFirstName().equals(medicalRecord.getFirstName())

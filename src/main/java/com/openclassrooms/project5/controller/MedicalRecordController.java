@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.MedicalRecord;
-import com.openclassrooms.project5.service.MedicalRecordService;
+import com.openclassrooms.project5.service.IMedicalRecordService;
 
 @RestController
 public class MedicalRecordController {
@@ -18,7 +18,7 @@ public class MedicalRecordController {
 	private static final Logger log = LoggerFactory.getLogger(MedicalRecordController.class);
 
 	@Autowired
-	private MedicalRecordService medicalRecordService;
+	private IMedicalRecordService medicalRecordService;
 
 	@RequestMapping(value = "/medicalRecord", method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<MedicalRecord> addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {

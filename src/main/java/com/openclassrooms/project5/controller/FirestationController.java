@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Firestation;
 import com.openclassrooms.project5.dto.Station;
-import com.openclassrooms.project5.service.FirestationService;
+import com.openclassrooms.project5.service.IFirestationService;
 
 @RestController
 public class FirestationController {
@@ -25,7 +25,7 @@ public class FirestationController {
 	private static final Logger log = LoggerFactory.getLogger(FirestationController.class);
 
 	@Autowired
-	private FirestationService firestationService;
+	private IFirestationService firestationService;
 
 	// http://localhost:8080/fire?address=<address>
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")

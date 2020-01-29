@@ -9,19 +9,23 @@ import com.openclassrooms.project5.domain.Person;
 import com.openclassrooms.project5.dto.ChildAlert;
 
 @Repository
-public class PersonRepository {
+public class PersonRepository implements IPersonRepository {
 
 	private List<Person> persons = new ArrayList<>();
 
-	public List<Person> getPersons() {
-		return persons;
-	}
-
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#add(com.openclassrooms.project5.domain.Person)
+	 */
+	@Override
 	public void add(Person person) {
 		persons.add(person);
 	}
 
 	// http://localhost:8080/communityEmail?city=<city>
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#getEmailsByCity(java.lang.String)
+	 */
+	@Override
 	public List<String> getEmailsByCity(String city) {
 
 		List<String> result = new ArrayList<>();
@@ -35,6 +39,10 @@ public class PersonRepository {
 	}
 
 	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#getPersonsInfoByFirstNameLastName(java.lang.String, java.lang.String)
+	 */
+	@Override
 	public List<Person> getPersonsInfoByFirstNameLastName(String firstName, String lastName) {
 
 		List<Person> result = new ArrayList<>();
@@ -48,6 +56,10 @@ public class PersonRepository {
 	}
 
 	// http://localhost:8080/childAlert?address=<address>
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#getChildrenInfoAlertByAddress(java.lang.String)
+	 */
+	@Override
 	public ChildAlert getChildrenInfoAlertByAddress(String address) {
 
 		ChildAlert result = new ChildAlert();
@@ -64,6 +76,10 @@ public class PersonRepository {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#createPerson(com.openclassrooms.project5.domain.Person)
+	 */
+	@Override
 	public Person createPerson(Person person) {
 		Person findPerson = getPersonFirstLastName(person.getFirstName(), person.getLastName());
 		if (findPerson == null) {
@@ -73,6 +89,10 @@ public class PersonRepository {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#updatePerson(com.openclassrooms.project5.domain.Person)
+	 */
+	@Override
 	public Person updatePerson(Person person) {
 		Person findPerson = getPersonFirstLastName(person.getFirstName(), person.getLastName());
 		if (findPerson != null) {
@@ -89,6 +109,10 @@ public class PersonRepository {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.openclassrooms.project5.repository.IPersonRepository#deletePerson(com.openclassrooms.project5.domain.Person)
+	 */
+	@Override
 	public boolean deletePerson(Person person) {
 		for (Person findPerson : persons) {
 			if (findPerson.getFirstName().equals(person.getFirstName())

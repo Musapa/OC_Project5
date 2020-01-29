@@ -13,20 +13,20 @@ import com.jsoniter.JsonIterator;
 import com.openclassrooms.project5.domain.Firestation;
 import com.openclassrooms.project5.domain.MedicalRecord;
 import com.openclassrooms.project5.domain.Person;
-import com.openclassrooms.project5.repository.FirestationRepository;
-import com.openclassrooms.project5.repository.MedicalRecordRepository;
-import com.openclassrooms.project5.repository.PersonRepository;
+import com.openclassrooms.project5.repository.IFirestationRepository;
+import com.openclassrooms.project5.repository.IMedicalRecordRepository;
+import com.openclassrooms.project5.repository.IPersonRepository;
 
 @Component
 public class JSONLoader {
 
-	private FirestationRepository firestationRepository;
-	private MedicalRecordRepository medicalRecordRepository;
-	private PersonRepository personRepository;
+	private IFirestationRepository firestationRepository;
+	private IMedicalRecordRepository medicalRecordRepository;
+	private IPersonRepository personRepository;
 
 	// constuctor injecton show that repository is created first
-	public JSONLoader(@Autowired FirestationRepository firestationRepository,
-			@Autowired MedicalRecordRepository medicalRecordRepository, @Autowired PersonRepository personRepository)
+	public JSONLoader(@Autowired IFirestationRepository firestationRepository,
+			@Autowired IMedicalRecordRepository medicalRecordRepository, @Autowired IPersonRepository personRepository)
 			throws IOException {
 
 		this.firestationRepository = firestationRepository;

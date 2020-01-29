@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.project5.domain.Person;
 import com.openclassrooms.project5.dto.ChildAlert;
-import com.openclassrooms.project5.service.PersonService;
+import com.openclassrooms.project5.service.IPersonService;
 
 @RestController
 public class PersonController {
@@ -23,7 +23,7 @@ public class PersonController {
 	private static final Logger log = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
-	private PersonService personService;
+	private IPersonService personService;
 
 	// http://localhost:8080/communityEmail?city=<city>
 	@RequestMapping(value = "/communityEmail", method = RequestMethod.GET, produces = "application/json")
