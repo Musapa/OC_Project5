@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -136,7 +137,7 @@ public class FirestationControllerTest {
 
 	@Test
 	public void addFirestation() throws Exception {
-		Firestation firestation = new Firestation("Some Address", "100");
+		Firestation firestation = new Firestation(Arrays.asList("Some Address"), "100");
 		String jsonContent = objectMapper.writeValueAsString(firestation);
 
 		MvcResult result = mockMvc.perform(post("/firestation").content(jsonContent)
@@ -156,8 +157,8 @@ public class FirestationControllerTest {
 
 	@Test
 	public void updateFirestation() throws Exception {
-		Firestation firestation = new Firestation("Some Address", "101");
-		Firestation updateFirestation = new Firestation("New Address", "101");
+		Firestation firestation = new Firestation(Arrays.asList("Some Address"), "101");
+		Firestation updateFirestation = new Firestation(Arrays.asList("New Address"), "101");
 		String jsonContent = objectMapper.writeValueAsString(firestation);
 		String jsonContent2 = objectMapper.writeValueAsString(updateFirestation);
 
@@ -176,7 +177,7 @@ public class FirestationControllerTest {
 		assertEquals("Station number correctly updated", true,
 				firestationResult.getStation().equals(updateFirestation.getStation()));
 		
-		Firestation firestationUnknown = new Firestation("Unknown Address", "-1");
+		Firestation firestationUnknown = new Firestation(Arrays.asList("Unknown Address"), "-1");
 		String jsonContent3 = objectMapper.writeValueAsString(firestationUnknown);
 		mockMvc.perform(put("/firestation").content(jsonContent3)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnprocessableEntity());
@@ -184,7 +185,7 @@ public class FirestationControllerTest {
 
 	@Test
 	public void deleteFirestation() throws Exception {
-		Firestation firestation = new Firestation("Some Address", "102");
+		Firestation firestation = new Firestation(Arrays.asList("Some Address"), "102");
 		String jsonContent = objectMapper.writeValueAsString(firestation);
 
 		mockMvc.perform(post("/firestation").content(jsonContent).contentType(MediaType.APPLICATION_JSON)

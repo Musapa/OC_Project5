@@ -13,18 +13,11 @@ public class PersonRepository implements IPersonRepository {
 
 	private List<Person> persons = new ArrayList<>();
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#add(com.openclassrooms.project5.domain.Person)
-	 */
 	@Override
 	public void add(Person person) {
 		persons.add(person);
 	}
 
-	// http://localhost:8080/communityEmail?city=<city>
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#getEmailsByCity(java.lang.String)
-	 */
 	@Override
 	public List<String> getEmailsByCity(String city) {
 
@@ -38,10 +31,6 @@ public class PersonRepository implements IPersonRepository {
 		return result;
 	}
 
-	// http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#getPersonsInfoByFirstNameLastName(java.lang.String, java.lang.String)
-	 */
 	@Override
 	public List<Person> getPersonsInfoByFirstNameLastName(String firstName, String lastName) {
 
@@ -55,12 +44,8 @@ public class PersonRepository implements IPersonRepository {
 		return result;
 	}
 
-	// http://localhost:8080/childAlert?address=<address>
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#getChildrenInfoAlertByAddress(java.lang.String)
-	 */
 	@Override
-	public ChildAlert getChildrenInfoAlertByAddress(String address) {
+	public ChildAlert getChildrenInfoAlertByAddress(List<String> address) {
 
 		ChildAlert result = new ChildAlert();
 
@@ -76,9 +61,6 @@ public class PersonRepository implements IPersonRepository {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#createPerson(com.openclassrooms.project5.domain.Person)
-	 */
 	@Override
 	public Person createPerson(Person person) {
 		Person findPerson = getPersonFirstLastName(person.getFirstName(), person.getLastName());
@@ -89,9 +71,6 @@ public class PersonRepository implements IPersonRepository {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#updatePerson(com.openclassrooms.project5.domain.Person)
-	 */
 	@Override
 	public Person updatePerson(Person person) {
 		Person findPerson = getPersonFirstLastName(person.getFirstName(), person.getLastName());
@@ -109,9 +88,6 @@ public class PersonRepository implements IPersonRepository {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IPersonRepository#deletePerson(com.openclassrooms.project5.domain.Person)
-	 */
 	@Override
 	public boolean deletePerson(Person person) {
 		for (Person findPerson : persons) {

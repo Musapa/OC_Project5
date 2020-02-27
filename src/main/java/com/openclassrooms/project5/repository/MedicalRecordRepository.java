@@ -12,17 +12,11 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
 
 	private List<MedicalRecord> medicalRecords = new ArrayList<>();
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#add(com.openclassrooms.project5.domain.MedicalRecord)
-	 */
 	@Override
 	public void add(MedicalRecord medicalRecord) {
 		medicalRecords.add(medicalRecord);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#createMedicalRecord(com.openclassrooms.project5.domain.MedicalRecord)
-	 */
 	@Override
 	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
 		MedicalRecord findMedicalRecord = getMedicalRecordByFirstLastName(medicalRecord.getFirstName(), medicalRecord.getLastName());
@@ -33,9 +27,6 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#updateMedicalRecord(com.openclassrooms.project5.domain.MedicalRecord)
-	 */
 	@Override
 	public MedicalRecord updateMedicalRecord(MedicalRecord medicalRecord) {
 		MedicalRecord findMedicalRecord = getMedicalRecordByFirstLastName(medicalRecord.getFirstName(), medicalRecord.getLastName());
@@ -50,9 +41,6 @@ public class MedicalRecordRepository implements IMedicalRecordRepository {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openclassrooms.project5.repository.IMedicalRecordRepository#deleteMedicalRecord(com.openclassrooms.project5.domain.MedicalRecord)
-	 */
 	@Override
 	public boolean deleteMedicalRecord(MedicalRecord medicalRecord) {
 		for (MedicalRecord findMedicalRecord : medicalRecords) {

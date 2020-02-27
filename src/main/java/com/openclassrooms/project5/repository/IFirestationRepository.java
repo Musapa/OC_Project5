@@ -8,7 +8,7 @@ public interface IFirestationRepository {
 
 	void add(Firestation firestation);
 
-	Firestation getFirestationByAddress(String address);
+	Firestation getFirestationByAddress(List<String> address);
 
 	List<Firestation> getFirestationHouseholdsByStationNumbers(String station);
 

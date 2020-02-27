@@ -11,7 +11,7 @@ public interface IPersonService {
 
 	List<Person> getPersonsInfoByFirstNameLastName(String firstName, String lastName);
 
-	ChildAlert getChildrenInfoAlertByAddress(String address);
+	ChildAlert getChildrenInfoAlertByAddress(List<String> address);
 
 	Person createPerson(Person person);
 

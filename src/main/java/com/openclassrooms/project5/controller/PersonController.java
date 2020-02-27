@@ -58,7 +58,7 @@ public class PersonController {
 
 	// http://localhost:8080/childAlert?address=<address>
 	@RequestMapping(value = "/childAlert", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<ChildAlert> getChildrenInfoAlertByAddress(@RequestParam(value = "address") String address) {
+	public ResponseEntity<ChildAlert> getChildrenInfoAlertByAddress(@RequestParam(value = "address") List<String> address) {
 		log.info("Get number of children and adults on: " + address);
 		ChildAlert childInfo = personService.getChildrenInfoAlertByAddress(address);
 

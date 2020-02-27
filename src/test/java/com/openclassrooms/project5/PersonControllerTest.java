@@ -125,7 +125,7 @@ public class PersonControllerTest {
 	public void addPerson() throws Exception {
 		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
 				Arrays.asList("medication0", "medication1"), Arrays.asList("allergies0", "allergies1"));
-		Person person = new Person("firstName", "lastName", "address", "city", "zip", "phone", "email", medicalRecord);
+		Person person = new Person("firstName", "lastName", Arrays.asList("address"), "city", "zip", "phone", "email", medicalRecord);
 		String jsonContent = objectMapper.writeValueAsString(person);
 
 		MvcResult result = mockMvc.perform(post("/person").content(jsonContent).contentType(MediaType.APPLICATION_JSON)
@@ -160,12 +160,12 @@ public class PersonControllerTest {
 
 	@Test
 	public void updatePerson() throws Exception {
-		Person person = new Person("firstName1", "lastName1", "address1", "city1", "zip1", "phone1", "email1",
+		Person person = new Person("firstName1", "lastName1", Arrays.asList("address1"), "city1", "zip1", "phone1", "email1",
 				new MedicalRecord());
 		MedicalRecord medicalRecord = new MedicalRecord("firstName1", "lastName1", new Date(),
 				Arrays.asList("medication0", "medication1"), Arrays.asList("allergies0", "allergies1"));
 
-		Person updatePerson = new Person("firstName1", "lastName1", "New address1", "New city1", "New zip1",
+		Person updatePerson = new Person("firstName1", "lastName1", Arrays.asList("New address1"), "New city1", "New zip1",
 				"New phone", "Newe mail1", medicalRecord);
 		String jsonContent = objectMapper.writeValueAsString(person);
 		String jsonContent2 = objectMapper.writeValueAsString(updatePerson);
@@ -199,7 +199,7 @@ public class PersonControllerTest {
 		assertEquals("Allergies correctly returned", true,
 				medicalRecord.getAllergies().equals(medicalRecordResult.getAllergies()));
 		
-		Person personUnknown = new Person("Unknown firstName", "Unknown lastName", "address1", "city1", "zip1", "phone1", "email1",
+		Person personUnknown = new Person("Unknown firstName", "Unknown lastName", Arrays.asList("address1"), "city1", "zip1", "phone1", "email1",
 				new MedicalRecord());
 		String jsonContent3 = objectMapper.writeValueAsString(personUnknown);
 		mockMvc.perform(put("/person").content(jsonContent3)
@@ -208,7 +208,7 @@ public class PersonControllerTest {
 
 	@Test
 	public void deletePerson() throws Exception {
-		Person person = new Person("firstName3", "lastName3", "address3", "city3", "zip3", "phone3", "email3",
+		Person person = new Person("firstName3", "lastName3", Arrays.asList("address3"), "city3", "zip3", "phone3", "email3",
 				new MedicalRecord());
 		String jsonContent = objectMapper.writeValueAsString(person);
 

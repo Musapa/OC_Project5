@@ -29,12 +29,12 @@ public class FirestationController {
 
 	// http://localhost:8080/fire?address=<address>
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<Firestation> getFirestationByAddress(@RequestParam(value = "address") String address) {
+	public ResponseEntity<Firestation> getFirestationByAddress(@RequestParam(value = "address") List<String> address) {
 		log.info("Get Firestation with address: " + address);
 		Firestation firestation = firestationService.getFirestationByAddress(address);
 
 		if (firestation != null) {
-			log.info("Found station number: " + firestation.getStation() + "by " + address);
+			log.info("Found station number: " + firestation.getStation() + " by " + address);
 			return ResponseEntity.ok().body(firestation);
 		} else {
 			log.error("Cannot find station with " + address);

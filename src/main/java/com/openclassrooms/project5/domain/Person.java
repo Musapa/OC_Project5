@@ -1,6 +1,8 @@
 package com.openclassrooms.project5.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.jsoniter.annotation.JsonProperty;
 
@@ -8,7 +10,7 @@ public class Person {
 
 	private String firstName;
 	private String lastName;
-	private String address;
+	public List<String> address;
 	private String city;
 	private String zip;
 	private String phone;
@@ -18,10 +20,10 @@ public class Person {
 
 
 	public Person() {
-		this("", "", "", "", "", "", "", new MedicalRecord());
+		this("", "", new ArrayList<String>(), "", "", "", "", new MedicalRecord());
 	}
 
-	public Person(String firstName, String lastName, String address, String city, String zip, String phone,String email, MedicalRecord medicalRecord) {
+	public Person(String firstName, String lastName, List<String> address, String city, String zip, String phone,String email, MedicalRecord medicalRecord) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setAddress(address);
@@ -48,11 +50,11 @@ public class Person {
 		return this.lastName;
 	}
 
-	public void setAddress(@JsonProperty("address") String address) {
+	public void setAddress(@JsonProperty("address") List<String> address) {
 		this.address = address;
 	}
 
-	public String getAddress() {
+	public List<String> getAddress() {
 		return this.address;
 	}
 

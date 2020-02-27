@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,10 +37,10 @@ public class JSONLoader {
 		ClassLoader classLoader = getClass().getClassLoader();
 		InputStream inputStream = classLoader.getResourceAsStream("data.json");
 		String data = readFromInputStream(inputStream);
-		// System.out.println("Data " + data);
+		//System.out.println("Data " + data);
+		// from JSON to object, with class specified
 		JSONData jsonData = JsonIterator.deserialize(data, JSONData.class);
 		loadRepository(jsonData);
-		// System.out.println("Testing " + personRepository.getPersons().size());
 	}
 
 	private String readFromInputStream(InputStream inputStream) throws IOException {
@@ -55,7 +56,7 @@ public class JSONLoader {
 
 	private void loadRepository(JSONData jsonData) {
 
-		HashMap<String, Firestation> firestationMap = new HashMap<>();
+		HashMap<List<String>, Firestation> firestationMap = new HashMap<>();
 		for (Firestation firestation : jsonData.firestations) {
 			firestationMap.put(firestation.getAddress(), firestation);
 			firestationRepository.add(firestation);

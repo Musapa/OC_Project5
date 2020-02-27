@@ -7,25 +7,25 @@ import com.jsoniter.annotation.JsonProperty;
 
 public class Firestation {
 
-	private String address;
+	public List<String> address;
 	private String station;
 	private List<Person> persons;
 
 	public Firestation() {
-		this("", "");
+		this(new ArrayList<String>(), "");
 	}
 
-	public Firestation(String address, String station) {
+	public Firestation(List<String> address, String station) {
 		this.setAddress(address);
 		this.setStation(station);
 		this.setPersons(new ArrayList<Person>());
 	}
 
-	public void setAddress(@JsonProperty("address") String address) {
+	public void setAddress(@JsonProperty("address") List<String> address) {
 		this.address = address;
 	}
 
-	public String getAddress() {
+	public List<String> getAddress() {
 		return this.address;
 	}
 
