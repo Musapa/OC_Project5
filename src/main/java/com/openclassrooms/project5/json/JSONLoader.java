@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +36,7 @@ public class JSONLoader {
 		ClassLoader classLoader = getClass().getClassLoader();
 		InputStream inputStream = classLoader.getResourceAsStream("data.json");
 		String data = readFromInputStream(inputStream);
-		//System.out.println("Data " + data);
+		// System.out.println("Data " + data);
 		// from JSON to object, with class specified
 		JSONData jsonData = JsonIterator.deserialize(data, JSONData.class);
 		loadRepository(jsonData);
@@ -56,10 +55,19 @@ public class JSONLoader {
 
 	private void loadRepository(JSONData jsonData) {
 
-		HashMap<List<String>, Firestation> firestationMap = new HashMap<>();
-		for (Firestation firestation : jsonData.firestations) {
-			firestationMap.put(firestation.getAddress(), firestation);
-			firestationRepository.add(firestation);
+		HashMap<String, Firestation> firestationAddressMap = new HashMap<>();
+		HashMap<String, Firestation> firestationMap = new HashMap<>();
+
+		for (FirestationData firestationData : jsonData.firestations) {
+			Firestation firestation = firestationMap.get(firestationData.getStation());
+
+			if (firestation == null) {
+				firestation = new Firestation();
+				firestation.setStation(firestationData.getStation());
+				firestationRepository.add(firestation);
+			}
+			firestationAddressMap.put(firestationData.getAddress(), firestation);
+			firestation.addAddress(firestationData.getAddress());
 		}
 
 		HashMap<String, MedicalRecord> medicalrecordMap = new HashMap<>();
@@ -69,12 +77,19 @@ public class JSONLoader {
 		}
 
 		for (Person person : jsonData.persons) {
-			Firestation firestation = firestationMap.get(person.getAddress());
 			MedicalRecord medicalRecord = medicalrecordMap.get(person.getFirstName() + person.getLastName());
-			person.setMedicalRecord(medicalRecord);
-			
+
+			if (medicalRecord != null) {
+				person.setMedicalRecord(medicalRecord);
+			}
+
 			personRepository.add(person);
-			firestation.getPersons().add(person);
+
+			Firestation firestation = firestationAddressMap.get(person.getAddress());
+
+			if (firestation != null) {
+				firestation.getPersons().add(person);
+			}
 		}
 	}
 

@@ -3,11 +3,9 @@ package com.openclassrooms.project5.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jsoniter.annotation.JsonProperty;
-
 public class Firestation {
 
-	public List<String> address;
+	private List<String> address;
 	private String station;
 	private List<Person> persons;
 
@@ -20,8 +18,12 @@ public class Firestation {
 		this.setStation(station);
 		this.setPersons(new ArrayList<Person>());
 	}
+	
+	public void addAddress(String address) {
+		this.address.add(address);
+	}
 
-	public void setAddress(@JsonProperty("address") List<String> address) {
+	public void setAddress(List<String> address) {
 		this.address = address;
 	}
 
@@ -29,7 +31,7 @@ public class Firestation {
 		return this.address;
 	}
 
-	public void setStation(@JsonProperty("station") String station) {
+	public void setStation(String station) {
 		this.station = station;
 	}
 
