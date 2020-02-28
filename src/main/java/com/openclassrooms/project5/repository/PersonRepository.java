@@ -45,7 +45,7 @@ public class PersonRepository implements IPersonRepository {
 	}
 
 	@Override
-	public ChildAlert getChildrenInfoAlertByAddress(List<String> address) {
+	public ChildAlert getChildrenInfoAlertByAddress(String address) {
 
 		ChildAlert result = new ChildAlert();
 

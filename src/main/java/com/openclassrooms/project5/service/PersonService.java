@@ -26,7 +26,7 @@ public class PersonService implements IPersonService {
 	}
 
 	@Override
-	public ChildAlert getChildrenInfoAlertByAddress(List<String> address) {
+	public ChildAlert getChildrenInfoAlertByAddress(String address) {
 		return personRepository.getChildrenInfoAlertByAddress(address);
 	}
 
