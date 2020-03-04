@@ -29,7 +29,7 @@ public class FirestationController {
 
 	// http://localhost:8080/fire?address=<address>
 	@RequestMapping(value = "/fire", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<Firestation> getFirestationByAddress(@RequestParam(value = "address") List<String> address) {
+	public ResponseEntity<Firestation> getFirestationByAddress(@RequestParam(value = "address") String address) {
 		log.info("Get Firestation with address: " + address);
 		Firestation firestation = firestationService.getFirestationByAddress(address);
 

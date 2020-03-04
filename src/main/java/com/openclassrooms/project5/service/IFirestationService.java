@@ -8,7 +8,7 @@ import com.openclassrooms.project5.dto.Station;
 public interface IFirestationService {
 
 
-	Firestation getFirestationByAddress(List<String> address);
+	Firestation getFirestationByAddress(String address);
 
 	List<Firestation> getFirestationHouseholdsByStationNumbers(String stations[]);
 

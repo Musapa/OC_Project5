@@ -19,15 +19,14 @@ public class FirestationRepository implements IFirestationRepository {
 	}
 
 	@Override
-	public Firestation getFirestationByAddress(List<String> address) {
+	public Firestation getFirestationByAddress(String address) {
 		for (Firestation firestation : firestations) {
-			if (firestation.getAddress().equals(address)) {
+			if (firestation.getAddress().contains(address)) {
 				return firestation;
 			}
 		}
 		return null;
 	}
-
 
 	@Override
 	public List<Firestation> getFirestationHouseholdsByStationNumbers(String station) {
@@ -41,7 +40,6 @@ public class FirestationRepository implements IFirestationRepository {
 		}
 		return result;
 	}
-
 
 	@Override
 	public List<String> getPhoneNumbersByStationNumber(String station) {
@@ -58,7 +56,6 @@ public class FirestationRepository implements IFirestationRepository {
 		return result;
 	}
 
-
 	@Override
 	public List<Firestation> getListOfPeopleByStationNumber(String station) {
 
@@ -72,17 +69,17 @@ public class FirestationRepository implements IFirestationRepository {
 		return result;
 	}
 
-
 	@Override
 	public Firestation createFirestation(Firestation firestation) {
-		Firestation findFirestation = getFirestationByAddress(firestation.getAddress());
-		if (findFirestation == null) {
-			firestations.add(firestation);
-			return firestation;
+		for (String address : firestation.getAddress()) {
+			Firestation findFirestation = getFirestationByAddress(address);
+			if (findFirestation == null) {
+				firestations.add(firestation);
+				return firestation;
+			}	
 		}
 		return null;
 	}
-
 
 	@Override
 	public Firestation updateFirestation(Firestation firestation) {
@@ -94,7 +91,6 @@ public class FirestationRepository implements IFirestationRepository {
 		}
 		return null;
 	}
-
 
 	@Override
 	public boolean deleteFirestation(Firestation firestation) {

@@ -18,7 +18,7 @@ public class FirestationService implements IFirestationService {
 	private IFirestationRepository firestationRepository;
 
 	@Override
-	public Firestation getFirestationByAddress(List<String> address) {
+	public Firestation getFirestationByAddress(String address) {
 		return firestationRepository.getFirestationByAddress(address);
 	}
 
